@@ -1,0 +1,450 @@
+/*
+ * WDean Medical is distributed under the
+ * GNU Lesser General Public License (GNU LGPL).
+ * For details see: http://www.wdeanmedical.com
+ * copyright 2013-2014 WDean Medical
+ */
+ 
+ /* GLOBAL STYLES
+-------------------------------------------------- */
+body {
+  font-family: "Segoe UI", "Open Sans", Verdana, Arial, Helvetica, sans-serif;
+  margin-bottom: 80px;
+  margin-top: 48px;
+  background-color: #f8f8f8;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Segoe UI Light", "Open Sans Light" ,Verdana, Arial, Helvetica, sans-serif;
+  font-weight: 300;
+  margin-top: 5px;
+}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  padding-right: 7.5px;
+  padding-left: 7.5px;
+}
+.initially-no-display {
+  display: none;
+}
+.table-row-highlight {
+    background-color: #9DB8D9;
+}
+td.simple-data-table-footer p {
+    margin: 0px;
+}
+.form-control {
+   padding: 0px 0px 0px 5px;
+   font-size: 1em;
+}
+a {
+  color: #777;
+}
+.panel-top {
+  padding: 5px 0px 5px 10px;
+  margin-top: 3px;
+  background-color: #009999;
+  color: #fff;
+  font-size: 1.15em;
+  border: 1px solid transparent;
+  border-radius: 8px 8px 0px 0px;
+}
+.panel-bottom {
+  display: block;
+  background-color: #009999;
+  color: #fff;
+  padding: 15px 10px 15px 10px;
+  border: 1px solid transparent;
+  border-radius: 0px 0px 8px 8px;
+}
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+.navbar {
+  min-height: 40px;
+  background-color: #fff;
+}
+.navbar-brand {
+  height: 10px;
+  padding: 15px 25px 15px 10px;
+  line-height: 10px;
+}
+.navbar-nav {
+  margin: 7.5px -15px;
+}
+.navbar-nav > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 10px;
+}
+.navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.navbar-text {
+  margin: 8px 5px 0px 10px;
+}
+.navbar-toggle {
+  padding: 5px 8px;
+}
+#wdm-notification {
+	color: red;
+	font-size: 1em;
+	margin-top: 5px;	
+}
+.sub-navbar {
+  height: 15px;
+  margin-top: 48px;
+  background-color: #2a6496;
+  padding-top: 10px;
+  color: #fff;
+  opacity: 0.95;
+  border: 1px solid transparent;
+}
+button .clear-stop, button .clear-stop i {
+  opacity: 1.0;
+}
+
+/* CUSTOMIZE THE MODALS
+-------------------------------------------------- */
+ul.nav-tabs {
+  font-size: 1.15em;
+  font-weight: bold;
+}
+#size1, #size2, #size3, #size4, #size5, #size6 {
+  width: auto;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+.modal-header {
+  background-color: #009999;
+  color: #fff;
+}
+.modal-title {
+  font-size: 1.75em;
+  margin: 0px;
+  padding: 0px;
+}
+.modal-sub-title {
+  font-size: 1.5em;
+  color: #009999;
+  font-family: "Segoe UI Light", "Open Sans Light" ,Verdana, Arial, Helvetica, sans-serif;
+  font-weight: 300;
+}
+.search-panel {
+  background-color: #f8f8f8;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+.search-btn {
+  margin-top: 15px;
+}
+#filter {
+  margin-top: 5px;
+}
+.dropdown-menu {
+  padding: 15px; 
+  padding-bottom: 10px;
+}
+#app-signin-username {
+  margin-bottom: 10px;
+}
+#app-signin-password {
+  margin-bottom: 5px;
+}
+#plchld {
+  margin-bottom: 8px;
+}
+#modal-new-message .input-group {
+  margin-bottom: 5px;
+}
+#patient-search-results, .health-maintenance-summary, .vital-signs-list, .images-all-chart-sections-list {
+  min-height: 200px;
+}
+#btn-health-maintenance-summary-immun, #btn-health-vital-signs-print {
+  margin-right: 10px;
+}
+.close {
+  color: #fff;
+  opacity: 1.0;
+}
+
+/* CUSTOMIZE THE MAIN NAVIGATON
+-------------------------------------------------- */
+a.nav:link, a.nav:visited {
+  font-size: .70em;
+  color: #999999;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+a.nav:hover {
+  color: #fff;
+  background-color: #999999;
+}
+a.nav:active {
+  color: #fff;
+  background-color: #999999;
+}
+a.nav p, i{
+  padding: 1px 0px 1px 0px;
+  margin: 0px;
+}
+a.nav-xm:link, a.nav-xm:visited {
+  display:block;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+  color: #999999;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+a.nav-xm:hover {
+  color: #fff;
+  background-color: #999999;
+}
+a.nav-xm:active {
+  color: #fff;
+  background-color: #2a6496;
+}
+a.nav-selected:link, a.nav-selected:visited {
+  font-size: .70em;
+  color: #fff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  background-color: #009999;
+  margin-bottom: 5px;
+  margin-top: 45px;
+}
+a.nav-selected:hover {
+  color: #fff;
+  background-color: #2a6496;
+}
+a.nav-selected:active {
+  color: #fff;
+  background-color: #999999;
+}
+a.nav-selected p, i{
+  padding: 1px 0px 1px 0px;
+  margin: 0px;
+}
+a.nav-selected-xm:link, a.nav-selected-xm:visited {
+  display:block;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  background-color: #2a6496;
+}
+a.nav-selected-xm:hover {
+  color: #fff;
+  background-color: #2a6496;
+}
+a.nav-selected-xm:active {
+  color: #fff;
+  background-color: #999999;
+}
+.page-name {
+  color: #999999;
+}
+.page-name-sm {
+  color: #999999;
+}
+
+/* CUSTOMIZE THE PAGE CONTENTS
+-------------------------------------------------- */
+.chartheader {
+  display: block;
+  min-height: 75px;
+  font-size: 1em;
+  margin: 3px 0px 3px 0px;
+  padding: 5px 15px 5px 15px;
+  background-color: #fff;
+  color: #999999;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+}
+.table-row-highlight {
+    background-color: #9DB8D9;
+}
+.patient-chart-full-name { 
+	font-size: 20px; 
+}
+.patient-chart-next-appt, .patient-chart-gender, .patient-chart-mrn, .patient-chart-dob, .patient-chart-primary-phone, .patient-chart-secondary-phone { 
+padding-left: 5px;	 
+}
+.ttop {
+  padding: 5px 0px 5px 10px;
+  margin-top: 3px;
+  background-color: #009B9B;
+  color: #fff;
+  font-size: 1.25em;
+  font-weight: bold;
+  border: 1px solid #dddddd;
+  border-radius: 8px 8px 0px 0px;
+}
+/* Sign In
+-------------------------------------------------- */
+
+.main-panel {
+  background: url(../images/pm-background.jpg) no-repeat; 
+  background-size: cover;
+  border-radius: 0px;
+  margin-bottom: 0px;
+  border-top: 1px solid #009999;
+  border-bottom: 1px solid #009999;
+}
+.background-op {
+  background-color: rgba(255,255,255,0.8);
+  margin: 0px;
+}
+.page-head {
+  font-size: 1em;
+  text-align: justify;
+}
+.page-head-sm {
+  font-size: .75em;
+  text-align: justify;
+}
+.page-title {
+  font-size: 3em;
+}
+.page-title-sm {
+  font-size: 2em;
+}
+.news {
+  color: #000;
+  font-size: 1.5em;
+  margin-bottom: 2%;
+}
+#name {
+  font-size: 2em;
+}
+#pnote {
+  background-color: #999999;
+  border: none;
+}
+#phead {
+  background-color: #303030;
+  color: white;
+  border: none;
+}
+.ttop2 {
+  padding: 5px 0px 5px 10px;
+  background-color: #009B9B;
+  color: #fff;
+  font-size: 14px;
+  border: 1px solid #dddddd;
+  border-radius: 8px 8px 0px 0px;
+}
+#contact {
+  color: #999999;
+  font-size: 1.15em;
+  background-color: #fff;
+  padding: 7px 0px 0px 30px;
+  line-height: 10px;
+  padding-bottom: 5px;
+}
+.logo {
+  margin-right: 2%
+}
+.msg-sidebar {
+font-size: 1.25em;
+}
+.app-calendar {
+  text-align: center;
+  font-size: 14px;
+  font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+  width: auto;
+  margin: 0px;
+}
+
+/* CUSTOMIZE THE FOOTER
+-------------------------------------------------- */
+footer {
+  padding: 2% 0% 5% 0%;
+}
+footer h6 {
+  font-size: 1em;
+}
+footer ul {
+  font-size: .75em;
+  color: #999999;
+  margin-left: 0;
+  padding-left: 2em;
+  text-indent: -.15em;
+}
+footer li a {
+  color: #999999;
+}
+.sitemap {
+  padding-left: 2%;
+}
+.sitemap-sm {
+  padding-left: 7.5%;
+}
+.sitemap-xs {
+  padding-left: 10%;
+}
+.softdemo-xs {
+  padding-left: 10%;
+}
+
+/* CUSTOMIZE THE MISC
+-------------------------------------------------- */
+
+
+
+/***  NICK'S HACKS  ****/
+.form-element-error {
+  color: #bb0000;
+  margin:0 0 0 0;
+  display:inline;
+  clear: both;
+  max-width: 250px;
+  padding-bottom:0px;
+}
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  font-size: 200px;
+  direction: ltr;
+  cursor: pointer;
+}
+
+.headshot-sm  {
+  width:100px;
+  margin-right: 10px;
+}
+
+.headshot-med  {
+  width:140px;
+  margin-right: 10px;
+}
+
+.headshot-lg  {
+  width:180px;
+  margin-right: 10px;
+}
+
+
+.container-scroll {
+  background-color: #f8f8f8;
+  width: 100%;
+  height: 300px;
+  overflow: auto;
+}
+
+.container-scroll-200 {
+  background-color: #f8f8f8;
+  width: 100%;
+  height: 200px;
+  overflow: auto;
+}

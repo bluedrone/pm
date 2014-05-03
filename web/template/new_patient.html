@@ -1,0 +1,231 @@
+<!--
+  WDean Medical is distributed under the
+  GNU Lesser General Public License (GNU LGPL).
+  For details see: http://www.wdeanmedical.com
+  copyright 2013-2014 WDean Medical
+--> 
+
+<div class="modal fade" id="modal-new-patient" tabindex="-1" role="dialog" aria-labelledby="modal-new-patient" aria-hidden="true">
+  <div id="size2" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" id="new-patient-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">New Patient</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="container">
+              <form class="form-horizontal">
+                <div class="row">
+                  <div class="col-sm-5">
+                    <div class="form-group">
+                      <label for="new-patient-id" class="col-sm-3 control-label">Patient ID</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" id="new-patient-id">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-last-name" class="col-sm-3 control-label">Last Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" id="new-patient-last-name">
+                        <span id="new-patient-last-name-validation" class="form-element-error"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-first-name" class="col-sm-3 control-label">First Name</label>
+                      <div class="col-sm-5">
+                        <input type="text" class="form-control input-sm" id="new-patient-first-name">
+                        <span id="new-patient-first-name-validation" class="form-element-error"></span>
+                      </div>
+                      <label for="new-patient-middle-initial" class="col-sm-1 control-label">MI</label>
+                      <div class="col-sm-2">
+                        <input type="text" class="form-control input-sm" id="new-patient-middle-initial">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-ssn" class="col-sm-3 control-label">SSN</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" id="new-patient-ssn" placeholder="000-00-0000">
+                        <span id="new-patient-ssn-validation" class="form-element-error"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-dob" class="col-sm-3 control-label">Date of Birth</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" id="new-patient-dob" placeholder="MM/DD/YYYY">
+                        <span id="new-patient-dob-validation" class="form-element-error"></span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="new-patient-gender" class="col-sm-3 control-label">Gender</label>
+                      <div class="col-sm-3">
+                        <select class="form-control" id="new-patient-gender">
+                          <option value="">Choose</option>
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
+                        </select>
+                        <span id="new-patient-gender-validation" class="form-element-error"></span>
+                      </div>
+                      <label for="new-patient-marital-status" class="col-sm-2 control-label">Marital</label>
+                      <div class="col-sm-3">
+                        <select class="form-control" id="new-patient-maritial-status">
+                          <option value="null">Choose</option>
+                          <option value="1">Single</option>
+                          <option value="2">Married</option>
+                          <option value="3">Divorced</option>
+                          <option value="4">Widowed</option>
+                          <option value="5">Other</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-race" class="col-sm-3 control-label">Race</label>
+                      <div class="col-sm-3">
+                        <select class="form-control" id="new-patient-race">
+                          <option value="7">Choose</option>
+                          <option value="1">White</option>
+                          <option value="2">Black or African American</option>
+                          <option value="3">Asian</option>
+                          <option value="4">American Indian/ Alaskan Native</option>
+                          <option value="5">Native Hawaiian or Other Pacific Islander</option>
+                          <option value="6">More than one race</option>
+                          <option value="7">Unknown or Not Reported</option>
+                        </select>
+                      </div>
+                      <label for="new-patient-ethnicity" class="col-sm-2 control-label">Ethnicity</label>
+                      <div class="col-sm-3">
+                        <select class="form-control" id="new-patient-ethnicity">
+                          <option value="3">Choose</option>
+                          <option value="1">Not Hispanic or Latino</option>
+                          <option value="2">Hispanic or Latino</option>
+                          <option value="3">Unknown or Not Reported</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-address1" class="col-sm-3 control-label">Address</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" id="new-patient-address1">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputAddress2" class="col-sm-3 control-label"></label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" id="new-patient-address2">
+                        <span id="new-patient-address-validation" class="form-element-error"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-city" class="col-sm-3 control-label">City</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" id="new-patient-city">
+                        <span id="new-patient-city-validation" class="form-element-error"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-us-state" class="col-sm-3 control-label">State</label>
+                      <div class="col-sm-3">
+                        <select id="new-patient-us-state" class="form-control"></select>
+                        <span id="new-patient-us-state-validation" class="form-element-error"></span>
+                      </div>
+                      <label for="new-patient-postal-code" class="col-sm-2 control-label">Zip</label>
+                      <div class="col-sm-3">
+                        <input type="text" class="form-control input-sm" id="new-patient-postal-code" placeholder="00000">
+                        <span id="new-patient-postal-code-validation" class="form-element-error"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-5"> 
+                    <div class="form-group">
+                      <label for="new-patient-status" class="col-sm-3 control-label">Status</label>
+                      <div class="col-sm-3">
+                        <select class="form-control" id="new-patient-status">
+                          <option value="3">Active</option>
+                          <option value="2">Inactive</option>
+                          <option value="1">Deceased</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-occupation" class="col-sm-3 control-label">Occupation</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" id="new-patient-occupation">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-employed" class="col-sm-3 control-label">Employed</label>
+                      <div class="col-sm-3">
+                        <select class="form-control" id="new-patient-employed">
+                          <option value="">Choose</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                          <option>Retired</option>
+                          <option>NA</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-5">
+                        <input id="new-patient-employer" type="text" class="form-control input-sm" placeholder="Employer Name">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-patient-school" class="col-sm-3 control-label">School</label>
+                    <div class="col-sm-3">
+                      <select class="form-control" id="inputSchool">
+                        <option value="">Choose</option>
+                        <option>Full Time</option>
+                        <option>Part Time</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-5">
+                      <input id="new-patient-school-name" type="text" class="form-control input-sm" placeholder="School Name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="new-patient-primary-phone" class="col-sm-3 control-label">Primary Phone</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control input-sm" id="new-patient-primary-phone" placeholder="000-000-0000">
+                      <span id="new-patient-primary-phone-validation" class="form-element-error"></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="new-patient-secondary-phone" class="col-sm-3 control-label">Secondary Phone</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control input-sm" id="new-patient-secondary-phone" placeholder="000-000-0000">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="new-patient-email" class="col-sm-3 control-label">Email</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control input-sm" id="new-patient-email">
+                      <span id="new-patient-email-validation" class="form-element-error"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div><img id="new-patient-photo" src="images/headshot-placeholder2.jpg" class="img-responsive headshot-sm"></div>
+                  <div class="btn-group-vertical-sm">              
+                   <span class="btn btn-success fileinput-button">
+                     <div id="new-patient-photo-upload"></div>
+                   </span>
+                   <br>
+                   <br>
+                   <div id="new-patient-photo-upload-progress" class="progress"> 
+                     <div class="progress-bar progress-bar-success"></div> 
+                   </div>
+                  </div>
+                </div>  
+              </form>
+            </div>
+          </div> 
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a id="new-patient-save" class="btn btn-default">Save</a>
+        <a id="new-patient-cancel" class="app-dashboard-link btn btn-default">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>

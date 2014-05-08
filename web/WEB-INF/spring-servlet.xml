@@ -154,8 +154,8 @@
             <value>com.wdeanmedical.pm.entity.Division</value>
             <value>com.wdeanmedical.pm.entity.Ethnicity</value>
             <value>com.wdeanmedical.pm.entity.Gender</value>
-            <value>com.wdeanmedical.pm.entity.IntakeMedication</value>
-            <value>com.wdeanmedical.pm.entity.IntakeQuestion</value>
+            <value>com.wdeanmedical.pm.entity.EncounterMedication</value>
+            <value>com.wdeanmedical.pm.entity.EncounterQuestion</value>
             <value>com.wdeanmedical.pm.entity.MaritalStatus</value>
             <value>com.wdeanmedical.pm.entity.MedicalHistory</value>
             <value>com.wdeanmedical.pm.entity.MedicalProcedure</value>

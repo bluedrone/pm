@@ -6,16 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "intake_question")
-public class IntakeQuestion extends BaseEntity implements Serializable {
+@Table(name = "encounter_question")
+public class EncounterQuestion extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = -5235097606726399045L;
   private String question = "&nbsp;";
   private String response = "&nbsp;";
-  private int patientIntakeId;
-  private int patientId;
+  private int encounterId;
 
-  public IntakeQuestion() {
+  public EncounterQuestion() {
   }
 
   @Column(name = "question")
@@ -25,13 +24,9 @@ public class IntakeQuestion extends BaseEntity implements Serializable {
   @Column(name = "response")
   public String getResponse() { return response; }
   public void setResponse(String response) { this.response = response; }
-
-  @Column(name = "patient_intake_id")
-  public int getPatientIntakeId() { return patientIntakeId; }
-  public void setPatientIntakeId(int patientIntakeId) { this.patientIntakeId = patientIntakeId; }
   
-  @Column(name = "patient_id")
-  public int getPatientId() { return patientId; }
-  public void setPatientId(int patientId) { this.patientId = patientId; }
+  @Column(name = "encounter_id")
+  public int getEncounterId() { return encounterId; }
+  public void setEncounterId(int encounterId) { this.encounterId = encounterId; }
   
 }

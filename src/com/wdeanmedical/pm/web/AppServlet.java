@@ -208,9 +208,9 @@ public class AppServlet extends HttpServlet  {
     String ipAddress = request.getRemoteHost();
     String data = request.getParameter("data");
     Gson gson = new Gson();
-    AuthorizedDTO dto = gson.fromJson(data, AuthorizedDTO.class);  
+    PatientDTO dto = gson.fromJson(data, PatientDTO.class);  
     if (dto == null){
-      dto = new AuthorizedDTO();
+      dto = new PatientDTO();
       dto.setSessionId(request.getParameter("sessionId"));
     }
     return appService.isValidSession(dto, ipAddress, request.getPathInfo());

@@ -20,11 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.persistence.Transient;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wdeanmedical.pm.service.ActivityLogService;
 import com.wdeanmedical.pm.entity.Credentials;
 import com.wdeanmedical.pm.entity.Demographics;
 import com.wdeanmedical.pm.entity.MedicalHistory;
@@ -80,12 +80,14 @@ public class AppService {
   private ServletContext context;
   private WebApplicationContext wac;
   private AppDAO appDAO;
+  private ActivityLogService activityLogService;
 
 
   public AppService() throws MalformedURLException {
     context = Core.servletContext;
     wac = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
     appDAO = (AppDAO) wac.getBean("appDAO");
+    activityLogService = new ActivityLogService();
   }
 
   public  List<Patient> getRecentPatients(PatientDTO dto) throws Exception {
@@ -330,6 +332,7 @@ public class AppService {
     log.info("======= logout() of user: " + clinicianName); 
     appDAO.unparkUserSession(dto.getSessionId());
     appDAO.deleteUserSession(dto.getSessionId());
+    activityLogService.logLogout(clinicianName);
   }
 
   public  void park(AuthorizedDTO dto) throws Exception {
@@ -360,12 +363,13 @@ public class AppService {
       userSessionData.setUserSession(userSession);
       // Core.getUserSessionMap().put(userSession.getSessionId(), userSessionData);
       log.info("======= Added " + userSession.toString()); 
+      activityLogService.logLogin(user.getUsername());
     }
     return user;
   }
 
 
-  public  boolean isValidSession(AuthorizedDTO dto, String ipAddress, String path) throws Exception {
+  public  boolean isValidSession(PatientDTO dto, String ipAddress, String path) throws Exception {
     String username = "";
 
     appDAO.deleteExpiredUserSessions();
@@ -394,6 +398,7 @@ public class AppService {
     if (Core.userPermissionsMap.get(path) != null) {
       username = userSession.getUser().getUsername(); 
       log.info("======= isValidSession() checking " + path + " for user " + username + " with a permissions level of " + accessLevel); 
+      
       if (Core.userPermissionsMap.get(path)[accessLevel] == false) {
         log.info("======= isValidSession() user " + username + " lacks permission level to execute " + path); 
         return false;
@@ -404,7 +409,7 @@ public class AppService {
     userSession.setLastAccessTime(new Date());
     appDAO.update(userSession);
     log.info("======= isValidSession() user " + username + "'s timestamp updated to " + userSession.getLastAccessTime()); 
-
+    activityLogService.logViewPatient(username, dto.getId(), path.replaceFirst("/", ""));
     return true;
   }
   

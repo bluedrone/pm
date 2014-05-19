@@ -17,6 +17,7 @@ import com.wdeanmedical.pm.core.Core;
 import com.wdeanmedical.pm.entity.Activity;
 import com.wdeanmedical.pm.entity.ActivityLog;
 import com.wdeanmedical.pm.entity.BaseEntity;
+import com.wdeanmedical.pm.entity.Module;
 import com.wdeanmedical.pm.persistence.ActivityLogDAO;
 
 public class ActivityLogService {
@@ -32,33 +33,36 @@ public class ActivityLogService {
 		activityLogDAO = (ActivityLogDAO) wac.getBean("activityLogDAO");
 	}
 
-	public void logLogin(String username) throws Exception {
+	public void logLogin(String username, Integer clinicianId) throws Exception {
 		ActivityLog activityLog = new ActivityLog();
 		activityLog.setCreatedDate(new Date());
 		activityLog.setTimePerformed(new Date());
 		activityLog.setUsername(username);
-		activityLogDAO.create(activityLog, Activity.LOGIN);
+		 activityLog.setClinicianId(clinicianId);
+		activityLogDAO.create(activityLog, Activity.LOGIN, Module.PM);
 		log.info("======= Audit logged login for Username: " + username);
 	}
 
-	public void logLogout(String username)	throws Exception {
+	public void logLogout(String username, Integer clinicianId)	throws Exception {
 		ActivityLog activityLog = new ActivityLog();
 		activityLog.setCreatedDate(new Date());
 		activityLog.setTimePerformed(new Date());
 		activityLog.setUsername(username);
-		activityLogDAO.create(activityLog, Activity.LOGOUT);
+		 activityLog.setClinicianId(clinicianId);
+		activityLogDAO.create(activityLog, Activity.LOGOUT, Module.PM);
 		log.info("======= Audit logged logout for Username: " + username);
 
 	}
 	
-	public void logViewPatient(String username, Integer patientId, String path) throws Exception {
+	public void logViewPatient(String username, Integer clinicianId, Integer patientId, String path) throws Exception {
       ActivityLog activityLog = new ActivityLog();
       activityLog.setCreatedDate(new Date());
       activityLog.setTimePerformed(new Date());
       activityLog.setUsername(username);
+      activityLog.setClinicianId(clinicianId);
       activityLog.setPatientId(patientId);
       activityLog.setFieldName(path);
-      activityLogDAO.create(activityLog, Activity.VIEW_PATIENT);
+      activityLogDAO.create(activityLog, Activity.VIEW_PATIENT, Module.PM);
       log.info("======= Audit logged view patient for Username: " + username);
 
     }	

@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wdeanmedical.pm.entity.Module;
 import com.wdeanmedical.pm.entity.Activity;
 import com.wdeanmedical.pm.entity.ActivityLog;
 
@@ -28,10 +29,12 @@ public class ActivityLogDAO  extends SiteDAO{
         return this.sessionFactory.getCurrentSession();
       }
       
-      public void create(ActivityLog activityLog, Integer activityId) throws Exception {
+      public void create(ActivityLog activityLog, Integer activityId, Integer moduleId) throws Exception {
        	  Session session = this.getSession();
     	  Activity activity = (Activity)this.findById(Activity.class, activityId);
+    	  Module module = (Module) this.findById(Module.class, moduleId);
     	  activityLog.setActivity(activity);
+    	  activityLog.setModule(module);
      	  session.save(activityLog);     	
 	  }
 

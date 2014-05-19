@@ -170,6 +170,7 @@
             <value>com.wdeanmedical.pm.entity.MedicalTest</value>
             <value>com.wdeanmedical.pm.entity.MedicalTestStatus</value>
             <value>com.wdeanmedical.pm.entity.Medication</value>
+            <value>com.wdeanmedical.pm.entity.Module</value>
             <value>com.wdeanmedical.pm.entity.Patient</value>
             <value>com.wdeanmedical.pm.entity.PatientClinician</value>
             <value>com.wdeanmedical.pm.entity.PatientImmunization</value>

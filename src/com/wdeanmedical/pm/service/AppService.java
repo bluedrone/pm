@@ -92,79 +92,70 @@ public class AppService {
 
   public  List<Patient> getRecentPatients(PatientDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, null, "GetRecentPatients");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, null, "GetRecentPatients");
     return appDAO.getRecentPatients(RECENT_PATIENT_SIZE);
   }
   
   public  List<PatientMedication> getPatientMedications(PatientDTO dto) throws Exception {
     Patient patient = appDAO.findPatientById(dto.getId());
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "GetPatientMedications");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, patient.getId(), "GetPatientMedications");
     return appDAO.getPatientMedications(patient);
   }
   
   public  List<Patient> getPatients(PatientDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, null, "GetPatients");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, null, "GetPatients");
     return appDAO.getPatients();
   }
 
   public  List<PatientImmunization> getPatientImmunizations(PatientDTO dto) throws Exception {
     Patient patient = appDAO.findPatientById(dto.getId());
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "GetPatientImmunizations");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, patient.getId(), "GetPatientImmunizations");
     return appDAO.getPatientImmunizations(patient);
   }
 
   public  List<PatientMedicalTest> getPatientMedicalTests(PatientDTO dto) throws Exception {
     Patient patient = appDAO.findPatientById(dto.getId());
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "GetPatientMedicalTests");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, patient.getId(), "GetPatientMedicalTests");
     return appDAO.getPatientMedicalTests(patient);
   }
 
   public  List<PatientMedicalProcedure> getPatientMedicalProcedures(PatientDTO dto) throws Exception {
     Patient patient = appDAO.findPatientById(dto.getId());
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "GetMedicalProcedures");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, patient.getId(), "GetMedicalProcedures");
     return appDAO.getPatientMedicalProcedures(patient);
   }
 
   public  List<PatientLetter> getPatientLetters(PatientDTO dto) throws Exception {
     Patient patient = appDAO.findPatientById(dto.getId());
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "GetPatientLetters");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, patient.getId(), "GetPatientLetters");
     return appDAO.getPatientLetters(patient);
   }
 
   public  List<PatientMessage> getPatientMessages(PatientDTO dto, Boolean fromClinician) throws Exception {
     Patient patient = appDAO.findPatientById(dto.getId());
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "GetPatientMessages");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, patient.getId(), "GetPatientMessages");
     return appDAO.getPatientMessages(patient, fromClinician);
   }
 
   public  List<PatientMessage> getPatientToClinicianMessages(UserDTO dto, Boolean fromClinician) throws Exception {
     User user = appDAO.findUserById(dto.getId());
-    String clinicianName = user.getUsername(); 
-    Integer clinicianId = user.getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, null, "GetPatientToClinicianMessages");
+    Integer userId = user.getId();
+    activityLogService.logViewPatient(userId, userId, null, "GetPatientToClinicianMessages");
     return appDAO.getPatientToClinicianMessages();
   }
 
@@ -173,18 +164,16 @@ public class AppService {
     dto.setContent(patientMessage.getContent());
     dto.setPatient(patientMessage.getPatient());
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patientMessage.getPatient().getId(), "GetClinicianMessage");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, patientMessage.getPatient().getId(), "GetClinicianMessage");
     return true;
   }
 
   public List<Appointment> getAppointments(PatientDTO dto, boolean isPast) throws Exception {
     Patient patient = appDAO.findPatientById(dto.getId());
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "GetAppointments");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, patient.getId(), "GetAppointments");
     return appDAO.getAppointments(patient, isPast);
   }
 
@@ -230,11 +219,9 @@ public class AppService {
     
     MailHandler handler = new MailHandler();
     boolean isHtml = true;
-    String stString = st.toString();
-    
-    String clinicianName = user.getUsername(); 
-    Integer clinicianId = user.getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "NewAppt");    
+    String stString = st.toString();    
+    Integer userId = user.getId();
+    activityLogService.logViewPatient(userId, clinician.getId(), patient.getId(), "NewAppt");    
     
     handler.sendMimeMessage(patient.getCred().getEmail(), from, stString, title, isHtml);
   }
@@ -354,75 +341,68 @@ public class AppService {
     String stString = st.toString();
     
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "SaveNewPatient");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, anyClinician.getId(), patient.getId(), "SaveNewPatient");
     
     handler.sendMimeMessage(patient.getCred().getEmail(), from, stString, title, isHtml);
   }
   
   public List<PatientClinician> getClinicianPatients(ClinicianDTO dto) throws Exception {
     Clinician clinician = appDAO.findClinicianById(dto.getId());
-    activityLogService.logViewPatient(clinician.getUsername(), clinician.getId(), null, "ClinicianPatients");
+    activityLogService.logViewPatient(clinician.getId(), clinician.getId(), null, "ClinicianPatients");
     return appDAO.getClinicianPatients(clinician);
   }
   
   public List<PatientClinician> getUnassignedPatients(ClinicianDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, dto.getId(), "GetUnassignedPatients");  
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, null, "GetUnassignedPatients");  
     return appDAO.getUnassignedPatients();
   }
   
   public  List<Clinician> getClinicians(UserDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, dto.getId(), "GetUnassignedPatients");
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, null, "GetClinicians");
     return appDAO.getClinicians();
   }
 
   public  boolean processMessage(PatientDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, dto.getId(), "ProcessMessage");  
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, dto.getId(), "ProcessMessage");  
     return true;
   }
 
   public  void logout(AuthorizedDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
     String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
+    Integer userId = userSession.getUser().getId();
     log.info("======= logout() of user: " + clinicianName); 
     appDAO.unparkUserSession(dto.getSessionId());
     appDAO.deleteUserSession(dto.getSessionId());
-    activityLogService.logLogout(clinicianName, clinicianId);
+    activityLogService.logLogout(userId);
   }
 
   public  void park(AuthorizedDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId(); 
-    activityLogService.logViewPatient(clinicianName, clinicianId, null, "park");  
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, null, "park");  
     appDAO.parkUserSession(dto.getSessionId());
   }
   
   public  void unpark(AuthorizedDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId(); 
-    activityLogService.logViewPatient(clinicianName, clinicianId, null, "unpark");  
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, null, "unpark");  
     appDAO.unparkUserSession(dto.getSessionId());
   }
 
   public  List<PatientClinician> getPatientClinicians(PatientDTO dto) throws Exception {
     Patient patient = appDAO.findPatientById(dto.getId());
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId();
-    activityLogService.logViewPatient(clinicianName, clinicianId, patient.getId(), "GetPatientClinicians");  
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, userId, patient.getId(), "GetPatientClinicians");  
     return appDAO.getPatientClinicians(patient);
   }
 
@@ -441,7 +421,7 @@ public class AppService {
       userSessionData.setUserSession(userSession);
       // Core.getUserSessionMap().put(userSession.getSessionId(), userSessionData);
       log.info("======= Added " + userSession.toString()); 
-      activityLogService.logLogin(user.getUsername(), user.getId());
+      activityLogService.logLogin(user.getId());
     }
     return user;
   }
@@ -536,9 +516,8 @@ public class AppService {
     returnString = "{\"filename\":\""+filename+"\"}";
     String sessionId = request.getParameter("sessionId");  
     UserSession userSession = appDAO.findUserSessionBySessionId(sessionId);
-    String clinicianName = userSession.getUser().getUsername(); 
-    Integer clinicianId = userSession.getUser().getId(); 
-    activityLogService.logViewPatient(clinicianName, clinicianId, null, "UploadProfileImage");      
+    Integer userId = userSession.getUser().getId(); 
+    activityLogService.logViewPatient(userId, userId, null, "UploadProfileImage");      
     return returnString;
  }
  

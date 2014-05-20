@@ -33,37 +33,35 @@ public class ActivityLogService {
 		activityLogDAO = (ActivityLogDAO) wac.getBean("activityLogDAO");
 	}
 
-	public void logLogin(String username, Integer clinicianId) throws Exception {
+	public void logLogin(Integer userId) throws Exception {
 		ActivityLog activityLog = new ActivityLog();
 		activityLog.setCreatedDate(new Date());
 		activityLog.setTimePerformed(new Date());
-		activityLog.setUsername(username);
-		 activityLog.setClinicianId(clinicianId);
+		activityLog.setUserId(userId);
 		activityLogDAO.create(activityLog, Activity.LOGIN, Module.PM);
-		log.info("======= Audit logged login for Username: " + username);
+		log.info("======= Audit logged login for Username: " + userId);
 	}
 
-	public void logLogout(String username, Integer clinicianId)	throws Exception {
+	public void logLogout(Integer userId)	throws Exception {
 		ActivityLog activityLog = new ActivityLog();
 		activityLog.setCreatedDate(new Date());
 		activityLog.setTimePerformed(new Date());
-		activityLog.setUsername(username);
-		 activityLog.setClinicianId(clinicianId);
+		activityLog.setUserId(userId);
 		activityLogDAO.create(activityLog, Activity.LOGOUT, Module.PM);
-		log.info("======= Audit logged logout for Username: " + username);
+		log.info("======= Audit logged logout for Username: " + userId);
 
 	}
 	
-	public void logViewPatient(String username, Integer clinicianId, Integer patientId, String path) throws Exception {
+	public void logViewPatient(Integer userId, Integer clinicianId, Integer patientId, String path) throws Exception {
       ActivityLog activityLog = new ActivityLog();
       activityLog.setCreatedDate(new Date());
       activityLog.setTimePerformed(new Date());
-      activityLog.setUsername(username);
+      activityLog.setUserId(userId);
       activityLog.setClinicianId(clinicianId);
       activityLog.setPatientId(patientId);
       activityLog.setFieldName(path);
       activityLogDAO.create(activityLog, Activity.VIEW_PATIENT, Module.PM);
-      log.info("======= Audit logged view patient for Username: " + username);
+      log.info("======= Audit logged view patient for Username: " + userId);
 
     }	
 

@@ -39,7 +39,7 @@ public class ActivityLogService {
 		activityLog.setTimePerformed(new Date());
 		activityLog.setUserId(userId);
 		activityLogDAO.create(activityLog, Activity.LOGIN, Module.PM);
-		log.info("======= Audit logged login for Username: " + userId);
+		log.info("======= Audit logged login for userId: " + userId);
 	}
 
 	public void logLogout(Integer userId)	throws Exception {
@@ -48,7 +48,7 @@ public class ActivityLogService {
 		activityLog.setTimePerformed(new Date());
 		activityLog.setUserId(userId);
 		activityLogDAO.create(activityLog, Activity.LOGOUT, Module.PM);
-		log.info("======= Audit logged logout for Username: " + userId);
+		log.info("======= Audit logged logout for userId: " + userId);
 
 	}
 	
@@ -61,7 +61,7 @@ public class ActivityLogService {
       activityLog.setPatientId(patientId);
       activityLog.setFieldName(path);
       activityLogDAO.create(activityLog, Activity.VIEW_PATIENT, Module.PM);
-      log.info("======= Audit logged view patient for Username: " + userId);
+      log.info("======= Audit logged view patient for userId: " + userId);
 
     }	
 

@@ -86,8 +86,9 @@ public class AppServlet extends HttpServlet  {
     Core.mailAuthenticationPassword = context.getInitParameter("mailAuthenticationPassword");
     Core.patientDirPath = context.getInitParameter("patientDirPath");
     Core.imagesDir = context.getInitParameter("imagesDir");
-    Core.ehrHome = context.getInitParameter("ehrHome");
-    Core.portalHome = context.getInitParameter("portalHome");
+    //Core.ehrHome = context.getInitParameter("ehrHome");
+    //Core.portalHome = context.getInitParameter("portalHome");//filesHome
+    Core.filesHome = context.getInitParameter("filesHome");
     Core.buildUserPermissionsMap();
     try{
       appService = new AppService();
@@ -113,8 +114,14 @@ public class AppServlet extends HttpServlet  {
         if (isValidSession(request, response) == false) {
           returnString = logout(request, response);  
         }
-        else { 
-          if (pathInfo.equals("/getPatientMedicalTests")) {
+        else {
+          if (pathInfo.equals("/getFile/")) {
+            getFile(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientSummary")) {
+            returnString = getPatientSummary(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientMedicalTests")) {
             returnString = getPatientMedicalTests(request, response);  
           }
           else if (pathInfo.equals("/getPatientProcedures")) {
@@ -214,6 +221,19 @@ public class AppServlet extends HttpServlet  {
       dto.setSessionId(request.getParameter("sessionId"));
     }
     return appService.isValidSession(dto, ipAddress, request.getPathInfo());
+  }
+  
+  public void getFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    appService.getFile(request, response, getServletContext());  
+  }
+  
+  public String getPatientSummary(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String data = request.getParameter("data");
+    Gson gson = new Gson();
+    PatientDTO dto = gson.fromJson(data, PatientDTO.class);  
+    boolean result = appService.getPatientSummary(dto);
+    String json = gson.toJson(dto);
+    return json;
   }
 
   public String getClinicianMessage(HttpServletRequest request, HttpServletResponse response) throws Exception {

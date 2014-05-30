@@ -63,6 +63,16 @@
     <servlet-name>AdminServlet</servlet-name>
     <url-pattern>/admin/*</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>FileServlet</servlet-name>
+    <servlet-class>com.wdeanmedical.pm.web.FileServlet</servlet-class>
+  </servlet>
+    
+  <servlet-mapping>
+    <servlet-name>FileServlet</servlet-name>
+    <url-pattern>/file/*</url-pattern>
+  </servlet-mapping>
    
   <context-param>
     <param-name>mail.from</param-name>
@@ -96,23 +106,28 @@
   
   <context-param>
     <param-name>IMAGE_MAGICK_HOME</param-name>
-    <param-value>/Users/nick/imagemagick/bin/</param-value>
+    <param-value>C:\Users\rajesh\LocalApps\ImageMagick-6.8.9-Q16\</param-value>
   </context-param>  
   
-  <context-param>
+  <!-- <context-param>
     <param-name>portalHome</param-name>
-    <param-value>/Users/nick/workspace/portal/web/</param-value>
+    <param-value>C:\Users\rajesh\LocalApps\portal\</param-value>
   </context-param> 
   
   <context-param>
     <param-name>ehrHome</param-name>
-    <param-value>/Users/nick/workspace/ehr/web/</param-value>
-  </context-param> 
+    <param-value>C:\Users\rajesh\LocalApps\ehr\</param-value>
+  </context-param>  -->  
   
   <context-param>
     <param-name>appDefaultHeadshot</param-name>
     <param-value>headshot-placeholder.jpg</param-value>
   </context-param> 
+  
+  <context-param>
+    <param-name>filesHome</param-name>
+    <param-value>C:\Users\rajesh\LocalApps\</param-value>
+  </context-param>  
   
   <context-param>
     <param-name>patientDirPath</param-name>

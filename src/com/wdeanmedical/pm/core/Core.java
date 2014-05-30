@@ -32,9 +32,9 @@ public class Core {
   public static String smtphost;
   public static String smtpport;
   public static String debug;
-  public static String ehrHome;
-  public static String portalHome;
-  public static String smtpauth;
+  //public static String ehrHome;
+  //public static String portalHome;
+ public static String smtpauth;
   public static String mailServer;
   public static String factport;
   public static String factclass;
@@ -42,6 +42,7 @@ public class Core {
   public static String starttls;
   public static String imageMagickHome;
   public static int sessionTimeout;
+  public static String filesHome;  
   public static String patientDirPath;
   public static String appBaseDir;
   public static String appDefaultHeadshot;

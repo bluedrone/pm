@@ -53,7 +53,8 @@ public class PatientDTO extends AuthorizedDTO {
   private List<PatientClinician> patientClinicians;
   private List<Appointment> appointments;
   private List<Patient> patients;
-  private String profileImageTempPath; 
+  private String profileImageTempPath;
+  private String profileImagePath;
 
 
   public PatientDTO() {
@@ -176,5 +177,8 @@ public class PatientDTO extends AuthorizedDTO {
   
   public String getProfileImageTempPath() { return profileImageTempPath; }
   public void setProfileImageTempPath(String profileImageTempPath) { this.profileImageTempPath = profileImageTempPath; }
+  
+  public String getProfileImagePath() { return profileImagePath; }
+  public void setProfileImagePath(String profileImagePath) { this.profileImagePath = profileImagePath; }
   
 }

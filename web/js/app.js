@@ -334,23 +334,21 @@ function handleClickableRow(e) {
 
 
 function getPatientSummary() {
-  /*
   var jsonData = JSON.stringify({ id: app_currentPatientId, sessionId: user.sessionId });
   $.post("app/getPatientSummary", {data:jsonData}, function(data) {
     var parsedData = $.parseJSON(data);
     app_viewStack('patient-summary-screen', DO_SCROLL);
     var fullName = util_buildFullName(parsedData.firstName, parsedData.middleName, parsedData.lastName);
+    var patientHeadshot = 'app/getFile/?sessionId=' + parsedData.sessionId + "&patientId=" + parsedData.id  + "&profileImagePath=" + parsedData.profileImagePath;
     $('.patient-summary-full-name').html(fullName);
     $('.patient-summary-dob').html(dateFormat(parsedData.dob, 'mm/dd/yyyy'));
     $('.patient-summary-gender').html(parsedData.gender.name);
     $('.patient-summary-mrn').html(parsedData.mrn);
     $('.patient-summary-primary-phone').html(parsedData.primaryPhone);
     $('.patient-summary-secondary-phone').html(parsedData.secondaryPhone);
-    $('.headshot').attr('src', 'files/patients/'+parsedData.id+'/'+parsedData.profileImageTempPath);
+    $('.headshot').attr('src', patientHeadshot);
     viewPatientSummary();
   });
-  */
-    viewPatientSummary();
 }
 
 

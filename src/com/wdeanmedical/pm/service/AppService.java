@@ -9,9 +9,11 @@ package com.wdeanmedical.pm.service;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Date;
@@ -226,7 +228,51 @@ public class AppService {
     handler.sendMimeMessage(patient.getCred().getEmail(), from, stString, title, isHtml);
   }
   
+  public  boolean getPatientSummary(PatientDTO dto) throws Exception {
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+    Patient patient = appDAO.findPatientById(dto.getId());
+    dto.setFirstName(patient.getCred().getFirstName());
+    dto.setMiddleName(patient.getCred().getMiddleName());
+    dto.setLastName(patient.getCred().getLastName());
+    dto.setDob(sdf.format(patient.getDemo().getDob()));
+    dto.setGender(patient.getDemo().getGender().getCode());
+    dto.setMrn(patient.getCred().getMrn());
+    dto.setPrimaryPhone(patient.getDemo().getPrimaryPhone());
+    dto.setSecondaryPhone(patient.getDemo().getSecondaryPhone());
+    dto.setProfileImagePath(patient.getDemo().getProfileImagePath());
+    patient.setLastAccessed(new Date());
+    UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
+    Integer userId = userSession.getUser().getId();
+    activityLogService.logViewPatient(userId, null, patient.getId(), "getPatientSummary");
+    appDAO.update(patient);
+    return true;
+  }
   
+  public void getFile(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) throws Exception {
+    String sessionId = request.getParameter("sessionId");
+    String patientId = request.getParameter("patientId");
+    String profileImagePath = request.getParameter("profileImagePath"); 
+    
+    String filesHomePatientDirPath =  Core.filesHome  + Core.patientDirPath + "/" + patientId + "/";
+    
+    String mime = servletContext.getMimeType(profileImagePath);
+    if (mime == null) {
+      response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+      return;
+    }
+    response.setContentType(mime);  
+    File file = new File(filesHomePatientDirPath + profileImagePath);
+    response.setContentLength((int) file.length());
+    FileInputStream in = new FileInputStream(file);
+    OutputStream out = response.getOutputStream();
+    byte[] buf = new byte[1024];
+    int count = 0;
+    while ((count = in.read(buf)) >= 0) {
+      out.write(buf, 0, count);
+    }
+    out.close();
+    in.close();
+  }
     
   public void saveNewPatient(PatientDTO dto, HttpServletRequest request) throws Exception{
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -292,27 +338,19 @@ public class AppService {
     patient.setLastAccessed(new Date());
     appDAO.update(patient);
     
-    String profileImageTempPath = Core.appBaseDir + Core.imagesDir + "/" + dto.getProfileImageTempPath();
+    if(dto.getProfileImageTempPath() != null){
     
-    Runtime runtime = Runtime.getRuntime();
-    String portalPatientDirPath =  Core.portalHome  + Core.patientDirPath + "/" + patient.getId() + "/";
-    String ehrPatientDirPath =  Core.ehrHome  + Core.patientDirPath + "/" + patient.getId() + "/";
-    String pmPatientDirPath =  Core.appBaseDir + Core.patientDirPath + "/" + patient.getId() + "/";
-    
-    new File(portalPatientDirPath).mkdir();
-    new File(ehrPatientDirPath).mkdir();
-    new File(pmPatientDirPath).mkdir();
-    
-    String[] cpArgsPortal = {"cp", profileImageTempPath,  portalPatientDirPath};
-    runtime.exec(cpArgsPortal);
-    
-    String[] cpArgsEHR = {"cp", profileImageTempPath,  ehrPatientDirPath};
-    runtime.exec(cpArgsEHR);
-    
-    new File(pmPatientDirPath).mkdir();
-    String[] mvArgs = {"mv", profileImageTempPath,  pmPatientDirPath};
-    runtime.exec(mvArgs);
-    
+      String profileImageTempPath = Core.appBaseDir + Core.imagesDir + "/" + dto.getProfileImageTempPath();
+      
+      String filesHomePatientDirPath =  Core.filesHome  + Core.patientDirPath + "/" + patient.getId() + "/";
+           
+      new File(filesHomePatientDirPath).mkdirs(); 
+      
+      File profileImageTempPathFile =new File(profileImageTempPath);
+      profileImageTempPathFile.renameTo(new File(filesHomePatientDirPath + "/" + dto.getProfileImageTempPath()));     
+          
+    }   
+      
     PatientClinician pc = new PatientClinician();
     pc.setPatient(patient);
     Clinician anyClinician = appDAO.findClinicianById(Clinician.ANY_CLINICIAN);

@@ -63,16 +63,6 @@
     <servlet-name>AdminServlet</servlet-name>
     <url-pattern>/admin/*</url-pattern>
   </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>FileServlet</servlet-name>
-    <servlet-class>com.wdeanmedical.pm.web.FileServlet</servlet-class>
-  </servlet>
-    
-  <servlet-mapping>
-    <servlet-name>FileServlet</servlet-name>
-    <url-pattern>/file/*</url-pattern>
-  </servlet-mapping>
    
   <context-param>
     <param-name>mail.from</param-name>
@@ -106,7 +96,7 @@
   
   <context-param>
     <param-name>IMAGE_MAGICK_HOME</param-name>
-    <param-value>C:\Users\rajesh\LocalApps\ImageMagick-6.8.9-Q16\</param-value>
+    <param-value>/Users/nick/imagemagick/bin/</param-value>
   </context-param>  
   
   <!-- <context-param>
@@ -126,7 +116,7 @@
   
   <context-param>
     <param-name>filesHome</param-name>
-    <param-value>C:\Users\rajesh\LocalApps\</param-value>
+    <param-value>/Users/nick/</param-value>
   </context-param>  
   
   <context-param>

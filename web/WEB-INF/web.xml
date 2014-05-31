@@ -99,16 +99,6 @@
     <param-value>/Users/nick/imagemagick/bin/</param-value>
   </context-param>  
   
-  <!-- <context-param>
-    <param-name>portalHome</param-name>
-    <param-value>C:\Users\rajesh\LocalApps\portal\</param-value>
-  </context-param> 
-  
-  <context-param>
-    <param-name>ehrHome</param-name>
-    <param-value>C:\Users\rajesh\LocalApps\ehr\</param-value>
-  </context-param>  -->  
-  
   <context-param>
     <param-name>appDefaultHeadshot</param-name>
     <param-value>headshot-placeholder.jpg</param-value>
@@ -121,7 +111,7 @@
   
   <context-param>
     <param-name>patientDirPath</param-name>
-    <param-value>files/patients</param-value>
+    <param-value>wdm_files/patients</param-value>
   </context-param> 
   
   <context-param>

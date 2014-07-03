@@ -115,10 +115,7 @@ public class AppServlet extends HttpServlet  {
           returnString = logout(request, response);  
         }
         else {
-          if (pathInfo.equals("/getFile/")) {
-            getFile(request, response);  
-          }
-          else if (pathInfo.equals("/getPatientSummary")) {
+          if (pathInfo.equals("/getPatientSummary")) {
             returnString = getPatientSummary(request, response);  
           }
           else if (pathInfo.equals("/getPatientMedicalTests")) {
@@ -147,6 +144,9 @@ public class AppServlet extends HttpServlet  {
           }
           else if (pathInfo.equals("/getPatientSentMessages")) {
             returnString = getPatientSentMessages(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientProfileImage")) {
+            returnString = getPatientProfileImage(request, response);  
           }
           else if (pathInfo.equals("/getPastAppointments")) {
             returnString = getPastAppointments(request, response);  
@@ -223,9 +223,19 @@ public class AppServlet extends HttpServlet  {
     return appService.isValidSession(dto, ipAddress, request.getPathInfo());
   }
   
-  public void getFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    appService.getFile(request, response, getServletContext());  
+  
+  public String getPatientProfileImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String data = request.getParameter("data");
+    String profileImagePath = request.getParameter("profileImagePath"); 
+    Gson gson = new Gson();
+    String patientId = request.getParameter("patientId");
+    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
+    String filesHomePatientDirPath =  Core.filesHome  + Core.patientDirPath + "/" + patientId + "/";
+	appService.getFile(request, response, getServletContext(), filesHomePatientDirPath, profileImagePath);  
+    String json = gson.toJson(dto);
+    return json;
   }
+  
   
   public String getPatientSummary(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String data = request.getParameter("data");

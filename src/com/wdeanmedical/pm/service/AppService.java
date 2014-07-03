@@ -248,20 +248,15 @@ public class AppService {
     return true;
   }
   
-  public void getFile(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) throws Exception {
-    String sessionId = request.getParameter("sessionId");
-    String patientId = request.getParameter("patientId");
-    String profileImagePath = request.getParameter("profileImagePath"); 
-    
-    String filesHomePatientDirPath =  Core.filesHome  + Core.patientDirPath + "/" + patientId + "/";
-    
-    String mime = servletContext.getMimeType(profileImagePath);
+  public void getFile(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext, 
+                      String filePath, String fileName) throws Exception {
+    String mime = servletContext.getMimeType(fileName);
     if (mime == null) {
       response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       return;
     }
     response.setContentType(mime);  
-    File file = new File(filesHomePatientDirPath + profileImagePath);
+    File file = new File(filePath + fileName);
     response.setContentLength((int) file.length());
     FileInputStream in = new FileInputStream(file);
     OutputStream out = response.getOutputStream();

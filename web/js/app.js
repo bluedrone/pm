@@ -339,7 +339,7 @@ function getPatientSummary() {
     var parsedData = $.parseJSON(data);
     app_viewStack('patient-summary-screen', DO_SCROLL);
     var fullName = util_buildFullName(parsedData.firstName, parsedData.middleName, parsedData.lastName);
-    var patientHeadshot = 'app/getFile/?sessionId=' + parsedData.sessionId + "&patientId=" + parsedData.id  + "&profileImagePath=" + parsedData.profileImagePath;
+    var patientHeadshot = 'app/getPatientProfileImage?sessionId=' + parsedData.sessionId + "&patientId=" + parsedData.id  + "&profileImagePath=" + parsedData.profileImagePath;
     $('.patient-summary-full-name').html(fullName);
     $('.patient-summary-dob').html(dateFormat(parsedData.dob, 'mm/dd/yyyy'));
     $('.patient-summary-gender').html(parsedData.gender.name);

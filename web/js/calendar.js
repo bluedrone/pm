@@ -27,13 +27,20 @@ function app_loadCalendar() {
           RenderUtil.render('dialog/new_event', {}, function(s) {
             $('#modals-placement').html(s);
             $('#modal-new-event').modal('show'); 
-            $('.form_datetime').datetimepicker();
+            $('.form_time').timepicker({
+                template: false,
+                showInputs: false,
+                minuteStep: 5
+            });
             getClinicians();
             $('#app-new-appt-clinician').on('change',function(){
               selectedClinician = $('#app-new-appt-clinician').val();
               getClinicianPatients();
             });
-            $('#app-new-appt-submit').click(function (e) { handleNewAppt(e); });
+            $('#app-new-appt-submit').one("click", function (e) { handleNewAppt(e); });
+            $( "#foo" ).one( "click", function() {
+  alert( "This will be displayed only once." );
+});
           });
         },
         lazyFetching: true,
@@ -115,14 +122,22 @@ function handleNewAppt(e) {
     return;
   }
   
+  
+  var startTimeString = dateFormat(new Date(), 'mm/dd/yyyy') + " " + $('#app-new-appt-start').val();
+  var startTime = moment (startTimeString, "mm/dd/yyyy HH:mm A");
+  var endTimeString = dateFormat(new Date(), 'mm/dd/yyyy') + " " + $('#app-new-appt-end').val();
+  var endTime = moment (endTimeString, "mm/dd/yyyy HH:mm A");
+ 
+  
   var jsonData = JSON.stringify({ 
-	sessionId: user.sessionId,
-    startTime: $('#app-new-appt-start').val(), 
-    endTime: $('#app-new-appt-end').val(), 
+    sessionId: user.sessionId,
+    startTime: startTimeString,
+    endTime: endTimeString,
     clinician: $('#app-new-appt-clinician').val(), 
     patient: $('#app-new-appt-patient').val(),
     desc: $('#app-new-appt-desc').val() 
   });
+  
   $.post("app/newAppt", {data:jsonData}, function(data) {
     handleNewAppt_clearForm();
     var parsedData = $.parseJSON(data);
@@ -134,6 +149,7 @@ function handleNewAppt(e) {
     //$('#app-calendar').fullCalendar('addEventSource', data);
     app_loadCalendar();
   });
+ 
 }
 
 function handleNewAppt_clearForm() {

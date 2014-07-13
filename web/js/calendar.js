@@ -38,9 +38,6 @@ function app_loadCalendar() {
               getClinicianPatients();
             });
             $('#app-new-appt-submit').one("click", function (e) { handleNewAppt(e); });
-            $( "#foo" ).one( "click", function() {
-  alert( "This will be displayed only once." );
-});
           });
         },
         lazyFetching: true,

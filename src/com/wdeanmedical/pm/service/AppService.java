@@ -186,7 +186,6 @@ public class AppService {
   
   public void newAppt(AppointmentDTO dto) throws Exception{
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-    //var endTime = moment (endTimeString, "mm/dd/yyyy HH:mm A");
     User user = appDAO.findUserBySessionId(dto.getSessionId());
     AppointmentType apptType = appDAO.findAppointmentTypeById(AppointmentType.OFFICE_VISIT);
     Clinician clinician = appDAO.findClinicianById(dto.getClinician());

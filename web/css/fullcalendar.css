@@ -1,5 +1,5 @@
 /*!
- * FullCalendar v2.0.0-beta2 Stylesheet
+ * FullCalendar v2.0.2 Stylesheet
  * Docs & License: http://arshaw.com/fullcalendar/
  * (c) 2013 Adam Shaw
  */
@@ -295,13 +295,11 @@ a.fc-event,
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	text-align: left;
 	}
 	
 .fc-event-time,
 .fc-event-title {
-  text-align:left;
-	padding: 1px 1px 1px 5px;
+	padding: 0 1px;
 	}
 	
 .fc .ui-resizable-handle {

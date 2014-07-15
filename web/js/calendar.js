@@ -38,7 +38,7 @@ function app_loadCalendar() {
               selectedClinician = $('#app-new-appt-clinician').val();
               getClinicianPatients();
             });
-            $('#app-new-appt-submit').one("click", function (e) { handleNewAppt(e); });
+            $('#app-new-appt-submit').one("click", function (e) { handleNewAppt(e, date, offset); });
           });
         },
         lazyFetching: true,
@@ -91,7 +91,8 @@ function app_loadCalendar() {
   });
 }
 
-function handleNewAppt(e) {
+function handleNewAppt(e, date, offset) {
+  date.add('m', offset);
   var isValid = true;
   handleNewAppt_clearErrors();
   
@@ -121,9 +122,9 @@ function handleNewAppt(e) {
   }
   
   
-  var startTimeString = dateFormat(new Date(), 'mm/dd/yyyy') + " " + $('#app-new-appt-start').val();
+  var startTimeString = dateFormat(date, 'mm/dd/yyyy') + " " + $('#app-new-appt-start').val();
   var startTime = moment (startTimeString, "mm/dd/yyyy HH:mm A");
-  var endTimeString = dateFormat(new Date(), 'mm/dd/yyyy') + " " + $('#app-new-appt-end').val();
+  var endTimeString = dateFormat(date, 'mm/dd/yyyy') + " " + $('#app-new-appt-end').val();
   var endTime = moment (endTimeString, "mm/dd/yyyy HH:mm A");
  
   

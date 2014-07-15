@@ -24,6 +24,7 @@ function app_loadCalendar() {
         selectable: true,
         selectHelper: true,
         select: function(date, jsEvent, view) {
+          var offset = new Date().getTimezoneOffset();
           RenderUtil.render('dialog/new_event', {}, function(s) {
             $('#modals-placement').html(s);
             $('#modal-new-event').modal('show'); 

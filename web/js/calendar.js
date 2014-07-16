@@ -23,8 +23,10 @@ function app_loadCalendar() {
         windowResize: true,
         selectable: true,
         selectHelper: true,
-        select: function(date, jsEvent, view) {
+        select: function(start, end) {
           var offset = new Date().getTimezoneOffset();
+          start.add('m', offset);
+          end.add('m', offset);
           RenderUtil.render('dialog/new_event', {}, function(s) {
             $('#modals-placement').html(s);
             $('#modal-new-event').modal('show'); 
@@ -33,12 +35,14 @@ function app_loadCalendar() {
                 showInputs: false,
                 minuteStep: 5
             });
+            $('#app-new-appt-start').val(dateFormat(start, 'h:MM TT'));
+            $('#app-new-appt-end').val(dateFormat(end, 'h:MM TT'));
             getClinicians();
             $('#app-new-appt-clinician').on('change',function(){
               selectedClinician = $('#app-new-appt-clinician').val();
               getClinicianPatients();
             });
-            $('#app-new-appt-submit').one("click", function (e) { handleNewAppt(e, date, offset); });
+            $('#app-new-appt-submit').one("click", function (e) { handleNewAppt(e, start, end, offset); });
           });
         },
         lazyFetching: true,
@@ -91,8 +95,7 @@ function app_loadCalendar() {
   });
 }
 
-function handleNewAppt(e, date, offset) {
-  date.add('m', offset);
+function handleNewAppt(e, start, end) {
   var isValid = true;
   handleNewAppt_clearErrors();
   
@@ -121,12 +124,10 @@ function handleNewAppt(e, date, offset) {
     return;
   }
   
-  
-  var startTimeString = dateFormat(date, 'mm/dd/yyyy') + " " + $('#app-new-appt-start').val();
+  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-new-appt-start').val();
   var startTime = moment (startTimeString, "mm/dd/yyyy HH:mm A");
-  var endTimeString = dateFormat(date, 'mm/dd/yyyy') + " " + $('#app-new-appt-end').val();
+  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-new-appt-end').val();
   var endTime = moment (endTimeString, "mm/dd/yyyy HH:mm A");
- 
   
   var jsonData = JSON.stringify({ 
     sessionId: user.sessionId,

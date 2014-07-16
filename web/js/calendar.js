@@ -24,26 +24,10 @@ function app_loadCalendar() {
         selectable: true,
         selectHelper: true,
         select: function(start, end) {
-          var offset = new Date().getTimezoneOffset();
-          start.add('m', offset);
-          end.add('m', offset);
-          RenderUtil.render('dialog/new_event', {}, function(s) {
-            $('#modals-placement').html(s);
-            $('#modal-new-event').modal('show'); 
-            $('.form_time').timepicker({
-                template: false,
-                showInputs: false,
-                minuteStep: 5
-            });
-            $('#app-new-appt-start').val(dateFormat(start, 'h:MM TT'));
-            $('#app-new-appt-end').val(dateFormat(end, 'h:MM TT'));
-            getClinicians();
-            $('#app-new-appt-clinician').on('change',function(){
-              selectedClinician = $('#app-new-appt-clinician').val();
-              getClinicianPatients();
-            });
-            $('#app-new-appt-submit').one("click", function (e) { handleNewAppt(e, start, end, offset); });
-          });
+          newApptForm(start, end)
+        },
+        eventDragStop: function(event, jsEvent, ui, view) {
+          moveAppt(event, jsEvent, ui, view);
         },
         lazyFetching: true,
         editable: true,
@@ -94,6 +78,39 @@ function app_loadCalendar() {
     }
   });
 }
+
+
+
+function moveAppt(event, jsEvent, ui, view) {
+  alert('appt moved');
+}
+
+
+
+function newApptForm(start, end) {
+  var offset = new Date().getTimezoneOffset();
+  start.add('m', offset);
+  end.add('m', offset);
+  RenderUtil.render('dialog/new_event', {}, function(s) {
+    $('#modals-placement').html(s);
+    $('#modal-new-event').modal('show'); 
+    $('.form_time').timepicker({
+      template: false,
+      showInputs: false,
+      minuteStep: 5
+    });
+    $('#app-new-appt-start').val(dateFormat(start, 'h:MM TT'));
+    $('#app-new-appt-end').val(dateFormat(end, 'h:MM TT'));
+    getClinicians();
+    $('#app-new-appt-clinician').on('change',function(){
+      selectedClinician = $('#app-new-appt-clinician').val();
+      getClinicianPatients();
+    });
+    $('#app-new-appt-submit').one("click", function (e) { handleNewAppt(e, start, end, offset); });
+  });
+}
+
+
 
 function handleNewAppt(e, start, end) {
   var isValid = true;

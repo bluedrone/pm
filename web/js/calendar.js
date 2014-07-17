@@ -15,6 +15,7 @@ function app_loadCalendar() {
     success: function(data) {
       $('#app-calendar').fullCalendar('destroy');
       var calendar =  $('#app-calendar').fullCalendar({
+        defaultView: app_currentCalendarView,
         header: {
           left: 'prev,next today',
           center: 'title',
@@ -29,14 +30,17 @@ function app_loadCalendar() {
         eventDragStop: function(event, jsEvent, ui, view) {
           moveAppt(event, jsEvent, ui, view);
         },
+        eventResizeStop: function(event, jsEvent, ui, view) {
+          moveAppt(event, jsEvent, ui, view);
+        },
         lazyFetching: true,
         editable: true,
         eventRender: function(event, element) {
           startDate = event.start.format('h:mm');
           endDate = event.end.format('h:mm');
           eventTitle = event.title; 
-          //element.find('.fc-event-time').html(startDate + ' - ' + endDate);
-          element.find('.fc-event-time').html(startDate);
+          element.find('.fc-event-time').html(startDate + ' - ' + endDate);
+          //element.find('.fc-event-time').html(startDate);
           element.find('.fc-event-title').html(eventTitle);
         },
         eventMouseover: function(calEvent, jsEvent) {
@@ -72,6 +76,9 @@ function app_loadCalendar() {
         }),
         allDayDefault: false
       });
+      $('.fc-button-agendaDay').click(function() { app_currentCalendarView = 'agendaDay'});
+      $('.fc-button-agendaWeek').click(function() { app_currentCalendarView = 'agendaWeek'});
+      $('.fc-button-month').click(function() { app_currentCalendarView = 'month'});
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
       debug('There was an error while fetching data for calendar.');
@@ -81,8 +88,16 @@ function app_loadCalendar() {
 
 
 
+
+
 function moveAppt(event, jsEvent, ui, view) {
   alert('appt moved');
+}
+
+
+
+function resizeAppt(event, jsEvent, ui, view) {
+  alert('appt resized');
 }
 
 

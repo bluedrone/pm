@@ -36,6 +36,7 @@ var patients;
 var clinicianMessages;
 var app_currentPatientId;
 var app_currentMessageId;
+var app_currentCalendarView = 'month';
 
 /************      @JQUERY INIT    *******************/
 $(document).ready(function() {

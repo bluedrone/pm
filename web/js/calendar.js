@@ -61,6 +61,14 @@ function app_loadCalendar() {
           $(this).css('z-index', 8);
           $('.tooltipevetn').remove();
         },
+        eventClick: function(calEvent, jsEvent, view) {
+          //alert('Event: ' + calEvent.title);
+          //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+          //alert('View: ' + view.name);
+          // change the border color just for fun
+          //$(this).css('border-color', 'red');
+          editApptForm(calEvent);
+        },
         events: $.map(data, function(item, i) {
           var event = new Object();
           if (item != null){
@@ -85,8 +93,6 @@ function app_loadCalendar() {
     }
   });
 }
-
-
 
 
 
@@ -127,7 +133,9 @@ function newApptForm(start, end) {
 
 
 
-function editApptForm(start, end) {
+function editApptForm(calEvent) {
+  var start = calEvent.start;
+  var end = calEvent.end;
   var offset = new Date().getTimezoneOffset();
   start.add('m', offset);
   end.add('m', offset);
@@ -141,6 +149,7 @@ function editApptForm(start, end) {
     });
     $('#app-appt-start').val(dateFormat(start, 'h:MM TT'));
     $('#app-appt-end').val(dateFormat(end, 'h:MM TT'));
+    $('#app-appt-desc').val(calEvent.desc);
     getClinicians();
     $('#app-appt-clinician').on('change',function(){
       selectedClinician = $('#app-appt-clinician').val();
@@ -201,9 +210,6 @@ function handleNewAppt(e, start, end) {
     displayNotification('New appointment created.');
     var parsedData = $.parseJSON(data);
     $('#modal-event').modal('hide');
-    //$('#app-calendar').fullCalendar('removeEvents');
-    //$('#app-calendar').fullCalendar('removeEventSource', data);
-    //$('#app-calendar').fullCalendar('addEventSource', data);
     app_loadCalendar();
   });
  

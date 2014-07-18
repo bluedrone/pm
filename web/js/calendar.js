@@ -106,22 +106,47 @@ function newApptForm(start, end) {
   var offset = new Date().getTimezoneOffset();
   start.add('m', offset);
   end.add('m', offset);
-  RenderUtil.render('dialog/new_event', {}, function(s) {
+  RenderUtil.render('dialog/event', {}, function(s) {
     $('#modals-placement').html(s);
-    $('#modal-new-event').modal('show'); 
+    $('#modal-event').modal('show'); 
     $('.form_time').timepicker({
       template: false,
       showInputs: false,
       minuteStep: 5
     });
-    $('#app-new-appt-start').val(dateFormat(start, 'h:MM TT'));
-    $('#app-new-appt-end').val(dateFormat(end, 'h:MM TT'));
+    $('#app-appt-start').val(dateFormat(start, 'h:MM TT'));
+    $('#app-appt-end').val(dateFormat(end, 'h:MM TT'));
     getClinicians();
-    $('#app-new-appt-clinician').on('change',function(){
-      selectedClinician = $('#app-new-appt-clinician').val();
+    $('#app-appt-clinician').on('change',function(){
+      selectedClinician = $('#app-appt-clinician').val();
       getClinicianPatients();
     });
-    $('#app-new-appt-submit').one("click", function (e) { handleNewAppt(e, start, end, offset); });
+    $('#app-appt-submit').one("click", function (e) { handleNewAppt(e, start, end, offset); });
+  });
+}
+
+
+
+function editApptForm(start, end) {
+  var offset = new Date().getTimezoneOffset();
+  start.add('m', offset);
+  end.add('m', offset);
+  RenderUtil.render('dialog/event', {}, function(s) {
+    $('#modals-placement').html(s);
+    $('#modal-event').modal('show'); 
+    $('.form_time').timepicker({
+      template: false,
+      showInputs: false,
+      minuteStep: 5
+    });
+    $('#app-appt-start').val(dateFormat(start, 'h:MM TT'));
+    $('#app-appt-end').val(dateFormat(end, 'h:MM TT'));
+    getClinicians();
+    $('#app-appt-clinician').on('change',function(){
+      selectedClinician = $('#app-appt-clinician').val();
+      getClinicianPatients();
+    });
+    $('#app-appt-submit').one("click", function (e) { handleNewAppt(e, start, end, offset); });
   });
 }
 
@@ -131,24 +156,24 @@ function handleNewAppt(e, start, end) {
   var isValid = true;
   handleNewAppt_clearErrors();
   
-  if($("#app-new-appt-start").val().length < 1) { 
-    showError('#app-new-appt-start-validation');
+  if($("#app-appt-start").val().length < 1) { 
+    showError('#app-appt-start-validation');
     isValid = false;
   }
-  if($("#app-new-appt-end").val().length < 1) { 
-    showError('#app-new-appt-end-validation');
+  if($("#app-appt-end").val().length < 1) { 
+    showError('#app-appt-end-validation');
     isValid = false;
   }
-  if($("#app-new-appt-clinician").val().length < 1) { 
-    showError('#app-new-appt-clinician-validation');
+  if($("#app-appt-clinician").val().length < 1) { 
+    showError('#app-appt-clinician-validation');
     isValid = false;
   }
-  if($("#app-new-appt-patient").val().length < 1) { 
-    showError('#app-new-appt-patient-validation');
+  if($("#app-appt-patient").val().length < 1) { 
+    showError('#app-appt-patient-validation');
     isValid = false;
   }
-  if($("#app-new-appt-desc").val().length < 1) { 
-    showError('#app-new-appt-desc-validation');
+  if($("#app-appt-desc").val().length < 1) { 
+    showError('#app-appt-desc-validation');
     isValid = false;
   }
   
@@ -156,18 +181,18 @@ function handleNewAppt(e, start, end) {
     return;
   }
   
-  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-new-appt-start').val();
+  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
   var startTime = moment (startTimeString, "mm/dd/yyyy HH:mm A");
-  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-new-appt-end').val();
+  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
   var endTime = moment (endTimeString, "mm/dd/yyyy HH:mm A");
   
   var jsonData = JSON.stringify({ 
     sessionId: user.sessionId,
     startTime: startTimeString,
     endTime: endTimeString,
-    clinician: $('#app-new-appt-clinician').val(), 
-    patient: $('#app-new-appt-patient').val(),
-    desc: $('#app-new-appt-desc').val() 
+    clinician: $('#app-appt-clinician').val(), 
+    patient: $('#app-appt-patient').val(),
+    desc: $('#app-appt-desc').val() 
   });
   
   $.post("app/newAppt", {data:jsonData}, function(data) {
@@ -175,7 +200,7 @@ function handleNewAppt(e, start, end) {
     var parsedData = $.parseJSON(data);
     displayNotification('New appointment created.');
     var parsedData = $.parseJSON(data);
-    $('#modal-new-event').modal('hide');
+    $('#modal-event').modal('hide');
     //$('#app-calendar').fullCalendar('removeEvents');
     //$('#app-calendar').fullCalendar('removeEventSource', data);
     //$('#app-calendar').fullCalendar('addEventSource', data);
@@ -185,18 +210,18 @@ function handleNewAppt(e, start, end) {
 }
 
 function handleNewAppt_clearForm() {
-  $('#app-new-appt-start').val('');
-  $('#app-new-appt-end').val('');
-  $('#app-new-appt-clinician').val('');
-  $('#app-new-appt-patient').val('');
-  $('#app-new-appt-desc').val('');
+  $('#app-appt-start').val('');
+  $('#app-appt-end').val('');
+  $('#app-appt-clinician').val('');
+  $('#app-appt-patient').val('');
+  $('#app-appt-desc').val('');
   handleNewAppt_clearErrors();
 }
 
 function handleNewAppt_clearErrors() {
-  $('#app-new-appt-start-validation').css({visibility: "hidden"});
-  $('#app-new-appt-end-validation').css({visibility: "hidden"});
-  $('#app-new-appt-clinician-validation').css({visibility: "hidden"});
-  $('#app-new-appt-patient-validation').css({visibility: "hidden"});
-  $('#app-new-appt-desc-validation').css({visibility: "hidden"});
+  $('#app-appt-start-validation').css({visibility: "hidden"});
+  $('#app-appt-end-validation').css({visibility: "hidden"});
+  $('#app-appt-clinician-validation').css({visibility: "hidden"});
+  $('#app-appt-patient-validation').css({visibility: "hidden"});
+  $('#app-appt-desc-validation').css({visibility: "hidden"});
 }

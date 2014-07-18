@@ -112,7 +112,8 @@ function newApptForm(start, end) {
   var offset = new Date().getTimezoneOffset();
   start.add('m', offset);
   end.add('m', offset);
-  RenderUtil.render('dialog/event', {}, function(s) {
+  var title = 'New Appointment';
+  RenderUtil.render('dialog/event', {title:title,deleteButton:null}, function(s) {
     $('#modals-placement').html(s);
     $('#modal-event').modal('show'); 
     $('.form_time').timepicker({
@@ -139,7 +140,8 @@ function editApptForm(calEvent) {
   var offset = new Date().getTimezoneOffset();
   start.add('m', offset);
   end.add('m', offset);
-  RenderUtil.render('dialog/event', {}, function(s) {
+  var title = 'Edit Appointment';
+  RenderUtil.render('dialog/event', {title:title, deleteButton: 'Delete'}, function(s) {
     $('#modals-placement').html(s);
     $('#modal-event').modal('show'); 
     $('.form_time').timepicker({
@@ -156,6 +158,7 @@ function editApptForm(calEvent) {
       getClinicianPatients();
     });
     $('#app-appt-submit').one("click", function (e) { handleNewAppt(e, start, end, offset); });
+    $('#app-appt-delete').one("click", function (e) { deleteApptConfirm(e); });
   });
 }
 

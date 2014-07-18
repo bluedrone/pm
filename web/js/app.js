@@ -359,7 +359,7 @@ function getClinicians() {
     var parsedData = $.parseJSON(data);
     clinicians = parsedData.clinicians;
     RenderUtil.render('component/clinician_select_options', {options:clinicians}, function(s) {
-      $("#app-new-appt-clinician").html(s);
+      $("#app-appt-clinician").html(s);
     });
   });
 }
@@ -377,7 +377,7 @@ function getClinicianPatients() {
       "</option>";
     }
 
-    $("#app-new-appt-patient").html(clinicianPatientsSelectOptions);  
+    $("#app-appt-patient").html(clinicianPatientsSelectOptions);  
   });
 }
 

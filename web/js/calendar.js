@@ -108,6 +108,21 @@ function resizeAppt(event, jsEvent, ui, view) {
 
 
 
+function suggestApptSlot(Date day) {
+  var startTimeString = dateFormat(day, 'mm/dd/yyyy') + ' 9:00 AM';
+  
+  var jsonData = JSON.stringify({ 
+    sessionId: user.sessionId,
+    startTime: startTimeString,
+  });
+  
+  $.post("app/suggestApptSlot", {data:jsonData}, function(data) {
+    var parsedData = $.parseJSON(data);
+  });
+}
+
+
+
 function newApptForm(start, end) {
   var offset = new Date().getTimezoneOffset();
   start.add('m', offset);
@@ -209,7 +224,6 @@ function handleNewAppt(e, start, end) {
   
   $.post("app/newAppt", {data:jsonData}, function(data) {
     handleNewAppt_clearForm();
-    var parsedData = $.parseJSON(data);
     displayNotification('New appointment created.');
     var parsedData = $.parseJSON(data);
     $('#modal-event').modal('hide');

@@ -169,6 +169,9 @@ public class AppServlet extends HttpServlet  {
           else if (pathInfo.equals("/patientSearch")) {
             returnString = patientSearch(request, response);  
           }
+          else if (pathInfo.equals("/suggestApptSlot")) {
+            returnString = suggestApptSlot(request, response);  
+          }
           else if (pathInfo.equals("/logout")) {
             returnString = logout(request, response);  
           }
@@ -466,6 +469,17 @@ public class AppServlet extends HttpServlet  {
       value = dateformat.format(date);
     }
     return value;
+  }
+  
+  
+  
+  public String suggestApptSlot(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String data = request.getParameter("data");
+    Gson gson = new Gson();
+    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class);  
+    appService.suggestApptSlot(dto);
+    String json = gson.toJson(dto);
+    return json;
   }
   
   

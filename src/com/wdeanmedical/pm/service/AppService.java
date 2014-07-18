@@ -183,6 +183,10 @@ public class AppService {
     return appDAO.getAllAppointments();
   }
 
+  public void suggestApptSlot(AppointmentDTO dto) throws Exception{
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    Date startTime; try { startTime = sdf.parse(dto.getStartTime()); } catch (ParseException pe) {startTime = null;}
+  }
   
   public void newAppt(AppointmentDTO dto) throws Exception{
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");

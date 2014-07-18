@@ -32,8 +32,6 @@ public class Core {
   public static String smtphost;
   public static String smtpport;
   public static String debug;
-  //public static String ehrHome;
-  //public static String portalHome;
  public static String smtpauth;
   public static String mailServer;
   public static String factport;
@@ -75,6 +73,7 @@ public class Core {
     userPermissionsMap.put("/saveNewPatient",                 new boolean[] {true ,true});
     userPermissionsMap.put("/saveNewClinician",               new boolean[] {true ,true});
     userPermissionsMap.put("/saveNewUser",                    new boolean[] {true ,true});
+    userPermissionsMap.put("/suggestApptSlot",                new boolean[] {true ,true});
     userPermissionsMap.put("/updateClinician",                new boolean[] {true ,true});
     userPermissionsMap.put("/updateUser",                     new boolean[] {true ,true});
     userPermissionsMap.put("/uploadProfileImage",             new boolean[] {true ,true});

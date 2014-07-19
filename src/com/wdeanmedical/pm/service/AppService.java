@@ -16,8 +16,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -185,13 +187,47 @@ public class AppService {
 
 
 
+
   public void suggestApptSlot(AppointmentDTO dto) throws Exception{
+    int nextInterval = 15;
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
     Integer apptLengthInMinutes = dto.getApptLengthInMinutes();
     Date startTime; try { startTime = sdf.parse(dto.getStartTime()); } catch (ParseException pe) {startTime = null;}
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(startTime);
+    cal.add(Calendar.MINUTE, apptLengthInMinutes); 
+    Date endTime = cal.getTime();
+    Date originalStartTime = new Date(startTime.getTime());
+    Date originalEndTime = new Date(endTime.getTime());
+    
     List<Appointment> appointments =  appDAO.getAppointmentsByDay(startTime);
-    // iterate over appts and find first gap where current appt endTime is at least apptLengthInMinutes less
-    // than the next appt's startTime.
+    
+    for (Iterator<Appointment> iter = appointments.iterator(); iter.hasNext(); ) {
+      Appointment appt = iter.next();
+      if (endTime.before(appt.getStartTime())) {
+        dto.setNewApptStartTime(startTime);
+        dto.setNewApptEndTime(endTime);
+        return;
+      }
+      if (iter.hasNext()) {
+        Appointment nextAppt = iter.next();
+        if (startTime.after(appt.getEndTime()) && endTime.before(nextAppt.getStartTime())) {
+          dto.setNewApptStartTime(startTime);
+          dto.setNewApptEndTime(endTime);
+          return;
+        }
+      }
+      cal.setTime(startTime);
+      cal.add(Calendar.MINUTE, nextInterval); 
+      startTime = cal.getTime();
+      
+      cal.setTime(endTime);
+      cal.add(Calendar.MINUTE, nextInterval); 
+      endTime = cal.getTime();
+    }
+    
+    dto.setNewApptStartTime(originalStartTime);
+    dto.setNewApptEndTime(originalEndTime);
   }
   
   

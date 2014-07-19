@@ -15,6 +15,8 @@ import javax.persistence.TemporalType;
 
 public class AppointmentDTO extends AuthorizedDTO {
 	private int id;
+	private Date newApptStartTime;
+	private Date newApptEndTime;
 	private String startTime;
 	private String endTime;
 	private Integer dayOfWeek;
@@ -66,5 +68,10 @@ public class AppointmentDTO extends AuthorizedDTO {
 
 	public Integer getApptLengthInMinutes() { return apptLengthInMinutes; }
 	public void setApptLengthInMinutes(Integer apptLengthInMinutes) { this.apptLengthInMinutes = apptLengthInMinutes; }
-	
+
+	public Date getNewApptStartTime() { return newApptStartTime; }
+	public void setNewApptStartTime(Date newApptStartTime) { this.newApptStartTime = newApptStartTime; }
+
+	public Date getNewApptEndTime() { return newApptEndTime; }
+	public void setNewApptEndTime(Date newApptEndTime) { this.newApptEndTime = newApptEndTime; }
 }

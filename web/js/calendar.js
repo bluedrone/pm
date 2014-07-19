@@ -108,23 +108,6 @@ function resizeAppt(event, jsEvent, ui, view) {
 
 
 
-function suggestApptSlot(day) {
-  var startTimeString = dateFormat(day, 'mm/dd/yyyy') + ' 9:00 AM';
-  
-  var jsonData = JSON.stringify({ 
-    sessionId: user.sessionId,
-    startTime: startTimeString,
-    apptLengthInMinutes: 30
-  });
-  
-  $.post("app/suggestApptSlot", {data:jsonData}, function(data) {
-    var parsedData = $.parseJSON(data);
-    return {start:parsedDate.start, end:parsedDate.end};
-  });
-}
-
-
-
 function newApptForm(start, end) {
   var offset = new Date().getTimezoneOffset();
   start.add('m', offset);
@@ -139,12 +122,29 @@ function newApptForm(start, end) {
       minuteStep: 5
     });
     if (app_currentCalendarView == 'month') {
-      var appt = suggestApptSlot(start);
-      start = appt.start;
-      end = appt.end;
+      var startTimeString = dateFormat(start, 'mm/dd/yyyy') + ' 9:00 AM';
+  
+      var jsonData = JSON.stringify({ 
+        sessionId: user.sessionId,
+        startTime: startTimeString,
+        apptLengthInMinutes: 30
+      });
+  
+      $.post("app/suggestApptSlot", {data:jsonData}, function(data) {
+        var parsedData = $.parseJSON(data);
+        var newStart = moment(parsedData.newApptStartTime, "mm/dd/yyyy HH:mm A");
+        var newEnd = moment(parsedData.newApptEndTime, "mm/dd/yyyy HH:mm A");
+        var startString = moment().format('HH:mm A');
+        var endString = moment().format('HH:mm A');
+        $('#app-appt-start').val(startString);
+        $('#app-appt-end').val(endString);
+      });
     }
-    $('#app-appt-start').val(dateFormat(start, 'h:MM TT'));
-    $('#app-appt-end').val(dateFormat(end, 'h:MM TT'));
+    else {
+      $('#app-appt-start').val(dateFormat(start, 'h:MM TT'));
+      $('#app-appt-end').val(dateFormat(end, 'h:MM TT'));
+    }
+    
     getClinicians();
     $('#app-appt-clinician').on('change',function(){
       selectedClinician = $('#app-appt-clinician').val();

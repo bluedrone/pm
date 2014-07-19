@@ -132,12 +132,10 @@ function newApptForm(start, end) {
   
       $.post("app/suggestApptSlot", {data:jsonData}, function(data) {
         var parsedData = $.parseJSON(data);
-        var newStart = moment(parsedData.newApptStartTime, "mm/dd/yyyy HH:mm A");
-        var newEnd = moment(parsedData.newApptEndTime, "mm/dd/yyyy HH:mm A");
-        var startString = moment().format('HH:mm A');
-        var endString = moment().format('HH:mm A');
-        $('#app-appt-start').val(startString);
-        $('#app-appt-end').val(endString);
+        start = moment(parsedData.newApptStartTime, "mm/dd/yyyy HH:mm A");
+        end = moment(parsedData.newApptEndTime, "mm/dd/yyyy HH:mm A");
+        $('#app-appt-start').val("11:30 AM");
+        $('#app-appt-end').val("12:30 PM");
       });
     }
     else {

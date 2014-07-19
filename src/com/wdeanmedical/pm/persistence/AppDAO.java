@@ -203,6 +203,28 @@ public class AppDAO extends SiteDAO {
   public List<Appointment> getAllAppointments() throws Exception {
     return this.findAll(Appointment.class);
   }
+  
+  
+  
+  public List<Appointment> getAppointmentsByDay(Date startTime) throws Exception {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(startTime);
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    cal.add(Calendar.DATE, 1); 
+    Date endTime = cal.getTime();
+        
+    Session session = this.getSession();
+    Criteria crit = session.createCriteria(Appointment.class);
+    crit.add(Restrictions.ge("startTime", startTime));
+    crit.add(Restrictions.lt("endTime", endTime));
+    crit.addOrder(Order.asc("startTime"));
+    List<Appointment> list =  crit.list();
+    return list;
+  }
+
 
 
   public List<Appointment> getAppointments(Patient patient, boolean isPast) throws Exception {

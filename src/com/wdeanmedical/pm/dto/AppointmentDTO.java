@@ -25,6 +25,7 @@ public class AppointmentDTO extends AuthorizedDTO {
 	private int appointmentType;
 	private String title;
 	private String desc;
+	private Integer apptLengthInMinutes;
 
 	public AppointmentDTO() {
 	}
@@ -62,4 +63,8 @@ public class AppointmentDTO extends AuthorizedDTO {
 
 	public String getDesc() { return desc; } 
 	public void setDesc(String desc) { this.desc = desc; }
+
+	public Integer getApptLengthInMinutes() { return apptLengthInMinutes; }
+	public void setApptLengthInMinutes(Integer apptLengthInMinutes) { this.apptLengthInMinutes = apptLengthInMinutes; }
+	
 }

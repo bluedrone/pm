@@ -183,10 +183,18 @@ public class AppService {
     return appDAO.getAllAppointments();
   }
 
+
+
   public void suggestApptSlot(AppointmentDTO dto) throws Exception{
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    Integer apptLengthInMinutes = dto.getApptLengthInMinutes();
     Date startTime; try { startTime = sdf.parse(dto.getStartTime()); } catch (ParseException pe) {startTime = null;}
+    List<Appointment> appointments =  appDAO.getAppointmentsByDay(startTime);
+    // iterate over appts and find first gap where current appt endTime is at least apptLengthInMinutes less
+    // than the next appt's startTime.
   }
+  
+  
   
   public void newAppt(AppointmentDTO dto) throws Exception{
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");

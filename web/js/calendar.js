@@ -108,16 +108,18 @@ function resizeAppt(event, jsEvent, ui, view) {
 
 
 
-function suggestApptSlot(Date day) {
+function suggestApptSlot(day) {
   var startTimeString = dateFormat(day, 'mm/dd/yyyy') + ' 9:00 AM';
   
   var jsonData = JSON.stringify({ 
     sessionId: user.sessionId,
     startTime: startTimeString,
+    apptLengthInMinutes: 30
   });
   
   $.post("app/suggestApptSlot", {data:jsonData}, function(data) {
     var parsedData = $.parseJSON(data);
+    return {start:parsedDate.start, end:parsedDate.end};
   });
 }
 
@@ -136,6 +138,11 @@ function newApptForm(start, end) {
       showInputs: false,
       minuteStep: 5
     });
+    if (app_currentCalendarView == 'month') {
+      var appt = suggestApptSlot(start);
+      start = appt.start;
+      end = appt.end;
+    }
     $('#app-appt-start').val(dateFormat(start, 'h:MM TT'));
     $('#app-appt-end').val(dateFormat(end, 'h:MM TT'));
     getClinicians();

@@ -27,10 +27,10 @@ function app_loadCalendar() {
         select: function(start, end) {
           newApptForm(start, end)
         },
-        eventDragStop: function(event, jsEvent, ui, view) {
+        eventDrop: function(event, jsEvent, ui, view) {
           moveAppt(event, jsEvent, ui, view);
         },
-        eventResizeStop: function(event, jsEvent, ui, view) {
+        eventResize: function(event, jsEvent, ui, view) {
           resizeAppt(event, jsEvent, ui, view);
         },
         lazyFetching: true,
@@ -172,8 +172,13 @@ function editApptForm(calEvent) {
 
 
 function moveAppt(event, jsEvent, ui, view) {
-  var startTimeString = dateFormat(event.start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
-  var endTimeString = dateFormat(event.end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
+  var start = event.start;
+  var end = event.end;
+  var offset = new Date().getTimezoneOffset();
+  start.add('m', offset);
+  end.add('m', offset);
+  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + dateFormat(start, 'h:MM TT');
+  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + dateFormat(end, 'h:MM TT');
   
   var jsonData = JSON.stringify({ 
     sessionId: user.sessionId,
@@ -192,8 +197,13 @@ function moveAppt(event, jsEvent, ui, view) {
 
 
 function resizeAppt(event, jsEvent, ui, view) {
-  var startTimeString = dateFormat(event.start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
-  var endTimeString = dateFormat(event.end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
+  var start = event.start;
+  var end = event.end;
+  var offset = new Date().getTimezoneOffset();
+  start.add('m', offset);
+  end.add('m', offset);
+  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + dateFormat(start, 'h:MM TT');
+  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + dateFormat(end, 'h:MM TT');
   
   var jsonData = JSON.stringify({ 
     sessionId: user.sessionId,

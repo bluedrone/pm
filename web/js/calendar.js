@@ -166,10 +166,13 @@ function editApptForm(calEvent) {
   
     $.post("app/getAppointment", {data:jsonData}, function(data) {
       var parsedData = $.parseJSON(data);
-      $('#app-appt-patient-text').val(parsedData.appointment.patient.id);
+      var appt = parsedData.appointment;
+      var patientFullName = util_buildFullName(appt.patient.cred.firstName, appt.patient.cred.middleName, appt.patient.cred.lastName);
+      $('#app-appt-patient-text').val(patientFullName);
       $('#app-appt-patient-text').show();
       $('#app-appt-patient').hide();
-      $('#app-appt-clinician-text').val(parsedData.appointment.clinician.id);
+      var clinicianFullName = util_buildFullName(appt.clinician.firstName, appt.clinician.middleName, appt.clinician.lastName);
+      $('#app-appt-clinician-text').val(clinicianFullName);
       $('#app-appt-clinician-text').show();
       $('#app-appt-clinician').hide();
     });

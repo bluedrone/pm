@@ -140,6 +140,30 @@ function newApptForm(start, end) {
 
 
 
+function deleteApptConfirm(e, id) {
+  var args = {
+    modalTitle:"Delete Appointment", 
+    modalH3:"Delete Appointment?",
+    modalH4:"",
+    cancelButton: 'Cancel',
+    okButton: 'Confirm'
+  };
+  RenderUtil.render('dialog/confirm', args, function(s) { 
+    $('#modals-placement').append(s);
+    $('#modal-confirm').modal('show'); 
+    $('#app-modal-confirmation-btn').click(function(){  
+      var jsonData = JSON.stringify({ sessionId: user.sessionId, id:id });
+      $.post("app/deleteAppt", {data:jsonData}, function(data) {
+        $('#modal-confirm').modal('hide'); 
+        displayNotification('Appointment Deleted.');
+        app_loadCalendar();
+      }); 
+    });
+  });
+}
+
+
+
 function editApptForm(calEvent) {
   var start = calEvent.start;
   var end = calEvent.end;
@@ -178,8 +202,8 @@ function editApptForm(calEvent) {
       $('#app-appt-clinician').hide();
     });
     
-    $('#app-appt-submit').one("click", function (e) { handleUpdateAppt(e, start, end, offset, id); });
-    $('#app-appt-delete').one("click", function (e) { deleteApptConfirm(e); });
+    $('#app-appt-submit').one("click", function (e) { handleUpdateAppt(e, start, end, id); });
+    $('#app-appt-delete').one("click", function (e) { deleteApptConfirm(e, id); });
   });
 }
 

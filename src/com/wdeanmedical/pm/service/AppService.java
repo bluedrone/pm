@@ -217,6 +217,19 @@ public class AppService {
           return;
         }
       }
+      else if (startTime.after(appt.getEndTime())) {
+        dto.setNewApptStartTime(startTime);
+        dto.setNewApptEndTime(endTime);
+        return;
+      }
+      else {
+        dto.setNewApptStartTime(appt.getEndTime());
+        cal.setTime(appt.getEndTime());
+        cal.add(Calendar.MINUTE, apptLengthInMinutes); 
+        dto.setNewApptEndTime(cal.getTime());
+        return;
+      }
+      
       cal.setTime(startTime);
       cal.add(Calendar.MINUTE, nextInterval); 
       startTime = cal.getTime();

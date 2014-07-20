@@ -101,7 +101,7 @@ function newApptForm(start, end) {
   start.add('m', offset);
   end.add('m', offset);
   var title = 'New Appointment';
-  RenderUtil.render('dialog/event', {title:title,deleteButton:null}, function(s) {
+  RenderUtil.render('dialog/event', {title:title,deleteButton:null,submitButtonLabel:'Add'}, function(s) {
     $('#modals-placement').html(s);
     $('#modal-event').modal('show'); 
     $('.form_time').timepicker({
@@ -147,7 +147,7 @@ function editApptForm(calEvent) {
   start.add('m', offset);
   end.add('m', offset);
   var title = 'Edit Appointment';
-  RenderUtil.render('dialog/event', {title:title, deleteButton: 'Delete'}, function(s) {
+  RenderUtil.render('dialog/event', {title:title, deleteButton:'Delete',submitButtonLabel:'Update'}, function(s) {
     $('#modals-placement').html(s);
     $('#modal-event').modal('show'); 
     $('.form_time').timepicker({

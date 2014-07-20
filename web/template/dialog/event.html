@@ -53,11 +53,11 @@
     </form>
   </div>
   <div class="modal-footer">
-    <a id="app-appt-submit" class="btn btn-primary">Add</a>
-    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>       
     {{if deleteButton != null}}
       <button type="button" class="btn btn-danger">${deleteButton}</button>
     {{/if}}
+    <button type="button" id="app-appt-submit" class="btn btn-primary">${submitButtonLabel}</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>       
   </div>
  </div>
  </div>

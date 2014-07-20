@@ -63,6 +63,7 @@ public class Core {
     userPermissionsMap.put("getPatientProfileImage",          new boolean[] {true,true});
     userPermissionsMap.put("/park",                           new boolean[] {true ,true});
     userPermissionsMap.put("/purgeClinician",                 new boolean[] {true ,true});
+    userPermissionsMap.put("/changeApptTime",                 new boolean[] {true ,true});
     userPermissionsMap.put("/purgeUser",                      new boolean[] {true ,true});
     userPermissionsMap.put("/unpark",                         new boolean[] {true ,true});
     userPermissionsMap.put("/getAppointments",                new boolean[] {true ,true});

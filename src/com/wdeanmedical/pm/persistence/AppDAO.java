@@ -256,6 +256,10 @@ public class AppDAO extends SiteDAO {
   public AppointmentType findAppointmentTypeById(int id) throws Exception {
     return (AppointmentType) this.findById(AppointmentType.class, id);
   }
+  
+  public Appointment findAppointmentById(int id) throws Exception {
+    return (Appointment) this.findById(Appointment.class, id);
+  }
 
   public Patient findPatientById(int id) throws Exception {
     return (Patient) this.findById(Patient.class, id);

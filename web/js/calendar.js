@@ -40,7 +40,6 @@ function app_loadCalendar() {
           endDate = event.end.format('h:mm');
           eventTitle = event.title; 
           element.find('.fc-event-time').html(startDate + ' - ' + endDate);
-          //element.find('.fc-event-time').html(startDate);
           element.find('.fc-event-title').html(eventTitle);
         },
         eventMouseover: function(calEvent, jsEvent) {
@@ -94,17 +93,6 @@ function app_loadCalendar() {
   });
 }
 
-
-
-function moveAppt(event, jsEvent, ui, view) {
-  alert('appt moved');
-}
-
-
-
-function resizeAppt(event, jsEvent, ui, view) {
-  alert('appt resized');
-}
 
 
 
@@ -179,6 +167,48 @@ function editApptForm(calEvent) {
     $('#app-appt-delete').one("click", function (e) { deleteApptConfirm(e); });
   });
 }
+
+
+
+
+function moveAppt(event, jsEvent, ui, view) {
+  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
+  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
+  
+  var jsonData = JSON.stringify({ 
+    sessionId: user.sessionId,
+    startTime: startTimeString,
+    endTime: endTimeString,
+    id: event.id
+  });
+  
+  $.post("app/changeApptTime", {data:jsonData}, function(data) {
+    displayNotification('Appointment moved.');
+    var parsedData = $.parseJSON(data);
+    app_loadCalendar();
+  });
+}
+
+
+
+function resizeAppt(event, jsEvent, ui, view) {
+  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
+  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
+  
+  var jsonData = JSON.stringify({ 
+    sessionId: user.sessionId,
+    startTime: startTimeString,
+    endTime: endTimeString,
+    id: event.id
+  });
+  
+  $.post("app/changeApptTime", {data:jsonData}, function(data) {
+    displayNotification('Appointment length changed.');
+    var parsedData = $.parseJSON(data);
+    app_loadCalendar();
+  });
+}
+
 
 
 

@@ -244,6 +244,19 @@ public class AppService {
   }
   
   
+    
+  public boolean changeApptTime(AppointmentDTO dto) throws Exception {
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    Appointment appt = appDAO.findAppointmentById(dto.getId());
+    Date startTime; try { startTime = sdf.parse(dto.getStartTime()); } catch (ParseException pe) {startTime = null;}
+    appt.setStartTime(startTime);
+    Date endTime; try { endTime = sdf.parse(dto.getEndTime()); } catch (ParseException pe) {endTime = null;}
+    appt.setEndTime(endTime);
+    appDAO.update(appt);
+    return true;
+  }
+  
+  
   
   public void newAppt(AppointmentDTO dto) throws Exception{
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
@@ -288,6 +301,8 @@ public class AppService {
     
     handler.sendMimeMessage(patient.getCred().getEmail(), from, stString, title, isHtml);
   }
+  
+  
   
   public  boolean getPatientSummary(PatientDTO dto) throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -454,21 +469,23 @@ public class AppService {
     return appDAO.getUnassignedPatients();
   }
   
-  public  List<Clinician> getClinicians(UserDTO dto) throws Exception {
+  public List<Clinician> getClinicians(UserDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
     Integer userId = userSession.getUser().getId();
     activityLogService.logViewPatient(userId, userId, null, "GetClinicians");
     return appDAO.getClinicians();
   }
 
-  public  boolean processMessage(PatientDTO dto) throws Exception {
+
+
+  public boolean processMessage(PatientDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
     Integer userId = userSession.getUser().getId();
     activityLogService.logViewPatient(userId, userId, dto.getId(), "ProcessMessage");  
     return true;
   }
 
-  public  void logout(AuthorizedDTO dto) throws Exception {
+  public void logout(AuthorizedDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
     String clinicianName = userSession.getUser().getUsername(); 
     Integer userId = userSession.getUser().getId();
@@ -478,7 +495,7 @@ public class AppService {
     activityLogService.logLogout(userId);
   }
 
-  public  void park(AuthorizedDTO dto) throws Exception {
+  public void park(AuthorizedDTO dto) throws Exception {
     UserSession userSession = appDAO.findUserSessionBySessionId(dto.getSessionId());
     Integer userId = userSession.getUser().getId();
     activityLogService.logViewPatient(userId, userId, null, "park");  

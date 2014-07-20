@@ -85,8 +85,6 @@ public class AppServlet extends HttpServlet  {
     Core.mailAuthenticationPassword = context.getInitParameter("mailAuthenticationPassword");
     Core.patientDirPath = context.getInitParameter("patientDirPath");
     Core.imagesDir = context.getInitParameter("imagesDir");
-    //Core.ehrHome = context.getInitParameter("ehrHome");
-    //Core.portalHome = context.getInitParameter("portalHome");//filesHome
     Core.filesHome = context.getInitParameter("filesHome");
     Core.buildUserPermissionsMap();
     try{
@@ -116,6 +114,9 @@ public class AppServlet extends HttpServlet  {
         else {
           if (pathInfo.equals("/getPatientSummary")) {
             returnString = getPatientSummary(request, response);  
+          }
+          else if (pathInfo.equals("/changeApptTime")) {
+            returnString = changeApptTime(request, response);  
           }
           else if (pathInfo.equals("/getPatientMedicalTests")) {
             returnString = getPatientMedicalTests(request, response);  
@@ -375,6 +376,15 @@ public class AppServlet extends HttpServlet  {
     Gson gson = new Gson();
     PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
     boolean result = appService.processMessage(dto); 
+    String json = gson.toJson(dto);
+    return (json);
+  }
+  
+  public String changeApptTime(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String data = request.getParameter("data");
+    Gson gson = new Gson();
+    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class); 
+    boolean result = appService.changeApptTime(dto); 
     String json = gson.toJson(dto);
     return (json);
   }

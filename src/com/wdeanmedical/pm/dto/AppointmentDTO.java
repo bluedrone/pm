@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.wdeanmedical.pm.entity.Appointment;
+
 
 public class AppointmentDTO extends AuthorizedDTO {
 	private int id;
@@ -28,6 +30,7 @@ public class AppointmentDTO extends AuthorizedDTO {
 	private String title;
 	private String desc;
 	private Integer apptLengthInMinutes;
+	private Appointment appointment;
 
 	public AppointmentDTO() {
 	}
@@ -74,4 +77,7 @@ public class AppointmentDTO extends AuthorizedDTO {
 
 	public Date getNewApptEndTime() { return newApptEndTime; }
 	public void setNewApptEndTime(Date newApptEndTime) { this.newApptEndTime = newApptEndTime; }
+
+	public Appointment getAppointment() { return appointment; }
+	public void setAppointment(Appointment appointment) { this.appointment = appointment; }
 }

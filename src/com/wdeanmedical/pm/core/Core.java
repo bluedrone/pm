@@ -32,7 +32,7 @@ public class Core {
   public static String smtphost;
   public static String smtpport;
   public static String debug;
- public static String smtpauth;
+  public static String smtpauth;
   public static String mailServer;
   public static String factport;
   public static String factclass;
@@ -66,6 +66,7 @@ public class Core {
     userPermissionsMap.put("/changeApptTime",                 new boolean[] {true ,true});
     userPermissionsMap.put("/purgeUser",                      new boolean[] {true ,true});
     userPermissionsMap.put("/unpark",                         new boolean[] {true ,true});
+    userPermissionsMap.put("/getAppointment",                 new boolean[] {true ,true});
     userPermissionsMap.put("/getAppointments",                new boolean[] {true ,true});
     userPermissionsMap.put("/getClinicians",                  new boolean[] {true ,true});
     userPermissionsMap.put("/getPatients",                    new boolean[] {true ,true});

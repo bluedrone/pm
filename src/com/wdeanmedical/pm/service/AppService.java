@@ -181,10 +181,11 @@ public class AppService {
     return appDAO.getAppointments(patient, isPast);
   }
 
+
+
   public List<Appointment> getAllAppointments() throws Exception {
     return appDAO.getAllAppointments();
   }
-
 
 
 
@@ -474,6 +475,14 @@ public class AppService {
     Integer userId = userSession.getUser().getId();
     activityLogService.logViewPatient(userId, userId, null, "GetClinicians");
     return appDAO.getClinicians();
+  }
+
+
+
+  public boolean getAppointment(AppointmentDTO dto) throws Exception {
+    Appointment appointment = appDAO.findAppointmentById(dto.getId());
+    dto.setAppointment(appointment);
+    return true;
   }
 
 

@@ -158,12 +158,18 @@ function editApptForm(calEvent) {
     $('#app-appt-start').val(dateFormat(start, 'h:MM TT'));
     $('#app-appt-end').val(dateFormat(end, 'h:MM TT'));
     $('#app-appt-desc').val(calEvent.desc);
-    getClinicians();
-    $('#app-appt-clinician').on('change',function(){
-      selectedClinician = $('#app-appt-clinician').val();
-      getClinicianPatients();
+    
+    var jsonData = JSON.stringify({ 
+      sessionId: user.sessionId,
+      id: event.id
     });
-    $('#app-appt-submit').one("click", function (e) { handleNewAppt(e, start, end, offset); });
+  
+    $.post("app/getAppointment", {data:jsonData}, function(data) {
+      var parsedData = $.parseJSON(data);
+      var foo = 2;
+    });
+    
+    $('#app-appt-submit').one("click", function (e) { handleUpdateAppt(e, start, end, offset); });
     $('#app-appt-delete').one("click", function (e) { deleteApptConfirm(e); });
   });
 }
@@ -220,6 +226,59 @@ function resizeAppt(event, jsEvent, ui, view) {
 }
 
 
+
+function handleUpdateAppt(e, start, end) {
+  var isValid = true;
+  handleNewAppt_clearErrors();
+  
+  if($("#app-appt-start").val().length < 1) { 
+    showError('#app-appt-start-validation');
+    isValid = false;
+  }
+  if($("#app-appt-end").val().length < 1) { 
+    showError('#app-appt-end-validation');
+    isValid = false;
+  }
+  if($("#app-appt-clinician").val().length < 1) { 
+    showError('#app-appt-clinician-validation');
+    isValid = false;
+  }
+  if($("#app-appt-patient").val().length < 1) { 
+    showError('#app-appt-patient-validation');
+    isValid = false;
+  }
+  if($("#app-appt-desc").val().length < 1) { 
+    showError('#app-appt-desc-validation');
+    isValid = false;
+  }
+  
+  if (isValid == false) {
+    return;
+  }
+  
+  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
+  var startTime = moment (startTimeString, "mm/dd/yyyy HH:mm A");
+  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
+  var endTime = moment (endTimeString, "mm/dd/yyyy HH:mm A");
+  
+  var jsonData = JSON.stringify({ 
+    sessionId: user.sessionId,
+    startTime: startTimeString,
+    endTime: endTimeString,
+    clinician: $('#app-appt-clinician').val(), 
+    patient: $('#app-appt-patient').val(),
+    desc: $('#app-appt-desc').val() 
+  });
+  
+  $.post("app/newAppt", {data:jsonData}, function(data) {
+    handleNewAppt_clearForm();
+    displayNotification('New appointment created.');
+    var parsedData = $.parseJSON(data);
+    $('#modal-event').modal('hide');
+    app_loadCalendar();
+  });
+ 
+}
 
 
 function handleNewAppt(e, start, end) {

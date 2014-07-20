@@ -160,6 +160,9 @@ public class AppServlet extends HttpServlet  {
           else if (pathInfo.equals("/getPatients")) {
             returnString = getPatients(request, response);  
           }
+          else if (pathInfo.equals("/getAppointment")) {
+            returnString = getAppointment(request, response);  
+          }
           else if (pathInfo.equals("/getAppointments")) {
             returnString = getAppointments(request, response);  
           }
@@ -268,6 +271,8 @@ public class AppServlet extends HttpServlet  {
     return json;
   }
 
+
+
   public String patientSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String data = request.getParameter("data");
     Gson gson = new Gson();
@@ -277,6 +282,20 @@ public class AppServlet extends HttpServlet  {
     String json = gson.toJson(dto);
     return json;
   }
+  
+  
+  
+  public String getAppointment(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String data = request.getParameter("data");
+    Gson gson = new Gson();
+    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class); 
+    boolean result = appService.getAppointment(dto);
+    String json = gson.toJson(dto);
+    return json;
+  }
+  
+  
+  
   public String getPatientProcedures(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String data = request.getParameter("data");
     Gson gson = new Gson();

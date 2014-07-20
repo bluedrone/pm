@@ -53,6 +53,7 @@ public class Core {
     userPermissionsMap.put("/activateUser",                   new boolean[] {true,true});
     userPermissionsMap.put("/deactivateClinician",            new boolean[] {true ,true});
     userPermissionsMap.put("/deactivateUser",                 new boolean[] {true,true});
+    userPermissionsMap.put("/deleteAppt",                     new boolean[] {true ,true});
     userPermissionsMap.put("/logout",                         new boolean[] {true ,true});
     userPermissionsMap.put("/patientSearch",                  new boolean[] {true ,true});
     userPermissionsMap.put("/getClinicians",                  new boolean[] {true,true});
@@ -77,6 +78,7 @@ public class Core {
     userPermissionsMap.put("/saveNewUser",                    new boolean[] {true ,true});
     userPermissionsMap.put("/suggestApptSlot",                new boolean[] {true ,true});
     userPermissionsMap.put("/updateClinician",                new boolean[] {true ,true});
+    userPermissionsMap.put("/updateAppt",                     new boolean[] {true ,true});
     userPermissionsMap.put("/updateUser",                     new boolean[] {true ,true});
     userPermissionsMap.put("/uploadProfileImage",             new boolean[] {true ,true});
  }

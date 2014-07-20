@@ -259,6 +259,28 @@ public class AppService {
   
   
   
+  public boolean updateAppt(AppointmentDTO dto) throws Exception {
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    Appointment appt = appDAO.findAppointmentById(dto.getId());
+    Date startTime; try { startTime = sdf.parse(dto.getStartTime()); } catch (ParseException pe) {startTime = null;}
+    appt.setStartTime(startTime);
+    Date endTime; try { endTime = sdf.parse(dto.getEndTime()); } catch (ParseException pe) {endTime = null;}
+    appt.setEndTime(endTime);
+    appt.setDesc(dto.getDesc());
+    appDAO.update(appt);
+    return true;
+  }
+  
+  
+  
+  public boolean deleteAppt(AppointmentDTO dto) throws Exception {
+    Appointment appt = appDAO.findAppointmentById(dto.getId());
+    appDAO.delete(appt);
+    return true;
+  }
+  
+  
+  
   public void newAppt(AppointmentDTO dto) throws Exception{
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
     User user = appDAO.findUserBySessionId(dto.getSessionId());

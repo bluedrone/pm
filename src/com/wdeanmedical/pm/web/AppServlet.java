@@ -190,6 +190,12 @@ public class AppServlet extends HttpServlet  {
           else if (pathInfo.equals("/uploadProfileImage")) {
             returnString = uploadProfileImage(request, response);  
           }
+          else if (pathInfo.equals("/updateAppt")) {
+            returnString = updateAppt(request, response);  
+          }
+          else if (pathInfo.equals("/deleteAppt")) {
+            returnString = deleteAppt(request, response);  
+          }
           else if (pathInfo.equals("/saveNewPatient")) {
             returnString = saveNewPatient(request, response);  
           }
@@ -516,6 +522,28 @@ public class AppServlet extends HttpServlet  {
     Gson gson = new Gson();
     AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class);  
     appService.newAppt(dto);
+    String json = gson.toJson(dto);
+    return json;
+  }
+  
+  
+  
+  public String updateAppt(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String data = request.getParameter("data");
+    Gson gson = new Gson();
+    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class);  
+    appService.updateAppt(dto);
+    String json = gson.toJson(dto);
+    return json;
+  }
+  
+  
+  
+  public String deleteAppt(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String data = request.getParameter("data");
+    Gson gson = new Gson();
+    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class);  
+    appService.deleteAppt(dto);
     String json = gson.toJson(dto);
     return json;
   }

@@ -143,6 +143,7 @@ function newApptForm(start, end) {
 function editApptForm(calEvent) {
   var start = calEvent.start;
   var end = calEvent.end;
+  var id = calEvent.id;
   var offset = new Date().getTimezoneOffset();
   start.add('m', offset);
   end.add('m', offset);
@@ -177,7 +178,7 @@ function editApptForm(calEvent) {
       $('#app-appt-clinician').hide();
     });
     
-    $('#app-appt-submit').one("click", function (e) { handleUpdateAppt(e, start, end, offset); });
+    $('#app-appt-submit').one("click", function (e) { handleUpdateAppt(e, start, end, offset, id); });
     $('#app-appt-delete').one("click", function (e) { deleteApptConfirm(e); });
   });
 }
@@ -235,7 +236,7 @@ function resizeAppt(event, jsEvent, ui, view) {
 
 
 
-function handleUpdateAppt(e, start, end) {
+function handleUpdateAppt(e, start, end, id) {
   var isValid = true;
   handleNewAppt_clearErrors();
   
@@ -247,40 +248,25 @@ function handleUpdateAppt(e, start, end) {
     showError('#app-appt-end-validation');
     isValid = false;
   }
-  if($("#app-appt-clinician").val().length < 1) { 
-    showError('#app-appt-clinician-validation');
-    isValid = false;
-  }
-  if($("#app-appt-patient").val().length < 1) { 
-    showError('#app-appt-patient-validation');
-    isValid = false;
-  }
-  if($("#app-appt-desc").val().length < 1) { 
-    showError('#app-appt-desc-validation');
-    isValid = false;
-  }
-  
+
   if (isValid == false) {
     return;
   }
   
   var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
-  var startTime = moment (startTimeString, "mm/dd/yyyy HH:mm A");
   var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
-  var endTime = moment (endTimeString, "mm/dd/yyyy HH:mm A");
   
   var jsonData = JSON.stringify({ 
     sessionId: user.sessionId,
+    id: id,
     startTime: startTimeString,
     endTime: endTimeString,
-    clinician: $('#app-appt-clinician').val(), 
-    patient: $('#app-appt-patient').val(),
     desc: $('#app-appt-desc').val() 
   });
   
-  $.post("app/newAppt", {data:jsonData}, function(data) {
+  $.post("app/updateAppt", {data:jsonData}, function(data) {
     handleNewAppt_clearForm();
-    displayNotification('New appointment created.');
+    displayNotification('Appointment updated.');
     var parsedData = $.parseJSON(data);
     $('#modal-event').modal('hide');
     app_loadCalendar();
@@ -309,11 +295,6 @@ function handleNewAppt(e, start, end) {
     showError('#app-appt-patient-validation');
     isValid = false;
   }
-  if($("#app-appt-desc").val().length < 1) { 
-    showError('#app-appt-desc-validation');
-    isValid = false;
-  }
-  
   if (isValid == false) {
     return;
   }

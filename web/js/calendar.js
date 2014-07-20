@@ -161,12 +161,17 @@ function editApptForm(calEvent) {
     
     var jsonData = JSON.stringify({ 
       sessionId: user.sessionId,
-      id: event.id
+      id: calEvent.id
     });
   
     $.post("app/getAppointment", {data:jsonData}, function(data) {
       var parsedData = $.parseJSON(data);
-      var foo = 2;
+      $('#app-appt-patient-text').val(parsedData.appointment.patient.id);
+      $('#app-appt-patient-text').show();
+      $('#app-appt-patient').hide();
+      $('#app-appt-clinician-text').val(parsedData.appointment.clinician.id);
+      $('#app-appt-clinician-text').show();
+      $('#app-appt-clinician').hide();
     });
     
     $('#app-appt-submit').one("click", function (e) { handleUpdateAppt(e, start, end, offset); });

@@ -155,6 +155,7 @@ function deleteApptConfirm(e, id) {
       var jsonData = JSON.stringify({ sessionId: user.sessionId, id:id });
       $.post("app/deleteAppt", {data:jsonData}, function(data) {
         $('#modal-confirm').modal('hide'); 
+        $('#modal-event').modal('hide');
         displayNotification('Appointment Deleted.');
         app_loadCalendar();
       }); 
@@ -202,8 +203,8 @@ function editApptForm(calEvent) {
       $('#app-appt-clinician').hide();
     });
     
-    $('#app-appt-submit').one("click", function (e) { handleUpdateAppt(e, start, end, id); });
-    $('#app-appt-delete').one("click", function (e) { deleteApptConfirm(e, id); });
+    $('#app-appt-submit').off().on("click", function (e) { handleUpdateAppt(e, start, end, id); });
+    $('#app-appt-delete').off().on("click", function (e) { deleteApptConfirm(e, id); });
   });
 }
 

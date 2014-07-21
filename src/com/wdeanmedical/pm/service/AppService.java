@@ -276,6 +276,35 @@ public class AppService {
   public boolean deleteAppt(AppointmentDTO dto) throws Exception {
     Appointment appt = appDAO.findAppointmentById(dto.getId());
     appDAO.delete(appt);
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    User user = appDAO.findUserBySessionId(dto.getSessionId());
+    Date startTime; try { startTime = sdf.parse(dto.getStartTime()); } catch (ParseException pe) {startTime = null;}
+    String apptTimeString = sdf.format(startTime); 
+    Clinician clinician = appDAO.findClinicianById(dto.getClinician());
+    Patient patient = appDAO.findPatientById(dto.getPatient());
+    String patientFullName = patient.getCred().getFirstName() + " " + patient.getCred().getLastName();
+    String clinicianFullName = clinician.getFirstName() + " " + clinician.getLastName();
+    String title = "Appointment on " + apptTimeString + " with " + clinicianFullName + " cancelled.";
+    String templatePath = context.getRealPath("/WEB-INF/email_templates");
+    StringTemplateGroup group = new StringTemplateGroup("underwebinf", templatePath, DefaultTemplateLexer.class);
+    StringTemplate st = group.getInstanceOf("appt_cancelled");
+    String from = Core.mailFrom;
+ 
+    st.setAttribute("patient", patientFullName);
+    st.setAttribute("clinician", clinicianFullName);
+    st.setAttribute("email", patient.getCred().getEmail());
+    st.setAttribute("phone", patient.getDemo().getPrimaryPhone());
+    st.setAttribute("apptTime", apptTimeString);
+    
+    MailHandler handler = new MailHandler();
+    boolean isHtml = true;
+    String stString = st.toString();    
+    Integer userId = user.getId();
+    activityLogService.logViewPatient(userId, clinician.getId(), patient.getId(), "DeleteAppt");    
+    
+    handler.sendMimeMessage(patient.getCred().getEmail(), from, stString, title, isHtml);
+    
     return true;
   }
   

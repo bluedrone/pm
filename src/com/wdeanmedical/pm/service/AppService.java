@@ -279,10 +279,9 @@ public class AppService {
     
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
     User user = appDAO.findUserBySessionId(dto.getSessionId());
-    Date startTime; try { startTime = sdf.parse(dto.getStartTime()); } catch (ParseException pe) {startTime = null;}
-    String apptTimeString = sdf.format(startTime); 
-    Clinician clinician = appDAO.findClinicianById(dto.getClinician());
-    Patient patient = appDAO.findPatientById(dto.getPatient());
+    String apptTimeString = sdf.format(appt.getStartTime()); 
+    Clinician clinician = appt.getClinician();
+    Patient patient = appt.getPatient();
     String patientFullName = patient.getCred().getFirstName() + " " + patient.getCred().getLastName();
     String clinicianFullName = clinician.getFirstName() + " " + clinician.getLastName();
     String title = "Appointment on " + apptTimeString + " with " + clinicianFullName + " cancelled.";

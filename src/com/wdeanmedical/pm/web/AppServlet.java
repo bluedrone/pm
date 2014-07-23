@@ -470,31 +470,31 @@ public class AppServlet extends HttpServlet  {
     return json;
   }
   
+  
+  
   public String getAppointments(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
     Gson gson = new Gson();
-    UserDTO appointments = gson.fromJson(data, UserDTO.class); 
-        
     List<Appointment> bookedAppts = null;
-        bookedAppts = appService.getAllAppointments();
+    bookedAppts = appService.getAllAppointments();
         
-        ArrayList<Map<String, Object>> visitsList = new ArrayList<Map<String, Object>>();
-        Map<String, Object> visitInstance = null;
-        if(bookedAppts != null) {
-            for(Appointment event : bookedAppts) {
-                visitInstance = new HashMap<String, Object>();
-                visitInstance.put("id", event.getId());
-                visitInstance.put("title", event.getTitle());
-                visitInstance.put("start", formatDate(event.getStartTime()));
-                visitInstance.put("end", formatDate(event.getEndTime()));
-                visitInstance.put("desc", event.getDesc());
-                visitInstance.put("allDay", Boolean.FALSE);
-                visitsList.add(visitInstance);
-            }
-        }
-
-        return gson.toJson(visitsList);
+    ArrayList<Map<String, Object>> visitsList = new ArrayList<Map<String, Object>>();
+    Map<String, Object> visitInstance = null;
+    if(bookedAppts != null) {
+      for(Appointment event : bookedAppts) {
+        visitInstance = new HashMap<String, Object>();
+        visitInstance.put("id", event.getId());
+        visitInstance.put("title", event.getTitle());
+        visitInstance.put("start", formatDate(event.getStartTime()));
+        visitInstance.put("end", formatDate(event.getEndTime()));
+        visitInstance.put("desc", event.getDesc());
+        visitInstance.put("allDay", Boolean.FALSE);
+        visitsList.add(visitInstance);
+      }
     }
+    return gson.toJson(visitsList);
+  }
+  
+  
   
   public static String formatDate(Date date){
     String value = null;

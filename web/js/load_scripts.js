@@ -19,11 +19,11 @@ head.js (
    "js/lib/bootstrap-timepicker.min.js",
    "js/lib/jquery.maskedinput.min.js",
    "js/lib/fileuploader.custom.js",
+   "js/dto.js",           
    "js/calendar.js",           
    "js/util.js",
    "js/view_stacks.js",
    "js/app.js",           
    "js/admin.js",           
-   "js/dto.js",           
    "js/RenderUtil.js"           
  );

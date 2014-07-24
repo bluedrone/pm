@@ -134,7 +134,8 @@ function newApptForm(start, end) {
       selectedClinician = $('#app-appt-clinician').val();
       getClinicianPatients();
     });
-    $('#app-appt-submit').one("click", function (e) { handleNewAppt(e, start, end, offset); });
+    // note: sending start date as end date since we want to stay on the same day.
+    $('#app-appt-submit').one("click", function (e) { handleNewAppt(e, start, start, offset); });
   });
 }
 

@@ -104,20 +104,10 @@ function newApptForm(start, end) {
   RenderUtil.render('dialog/event', {title:title,deleteButton:null,submitButtonLabel:'Add'}, function(s) {
     $('#modals-placement').html(s);
     $('#modal-event').modal('show'); 
-    $('.form_time').timepicker({
-      template: false,
-      showInputs: false,
-      minuteStep: 5
-    });
+    
     if (app_currentCalendarView == 'month') {
       var startTimeString = dateFormat(start, 'mm/dd/yyyy') + ' 9:00 AM';
-  
-      var jsonData = JSON.stringify({ 
-        sessionId: user.sessionId,
-        startTime: startTimeString,
-        apptLengthInMinutes: 30
-      });
-  
+      var jsonData = JSON.stringify({ sessionId: user.sessionId, startTime: startTimeString, apptLengthInMinutes: 30 });
       $.post("app/suggestApptSlot", {data:jsonData}, function(data) {
         var parsedData = $.parseJSON(data);
         $('#app-appt-start').val(dateFormat(parsedData.newApptStartTime, 'h:MM TT'));
@@ -128,7 +118,6 @@ function newApptForm(start, end) {
       $('#app-appt-start').val(dateFormat(start, 'h:MM TT'));
       $('#app-appt-end').val(dateFormat(end, 'h:MM TT'));
     }
-    
     getClinicians();
     $('#app-appt-clinician').on('change',function(){
       selectedClinician = $('#app-appt-clinician').val();
@@ -177,11 +166,6 @@ function editApptForm(calEvent) {
   RenderUtil.render('dialog/event', {title:title, deleteButton:'Delete',submitButtonLabel:'Update'}, function(s) {
     $('#modals-placement').html(s);
     $('#modal-event').modal('show'); 
-    $('.form_time').timepicker({
-      template: false,
-      showInputs: false,
-      minuteStep: 5
-    });
     $('#app-appt-start').val(dateFormat(start, 'h:MM TT'));
     $('#app-appt-end').val(dateFormat(end, 'h:MM TT'));
     $('#app-appt-desc').val(calEvent.desc);

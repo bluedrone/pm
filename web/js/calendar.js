@@ -124,7 +124,8 @@ function newApptForm(start, end) {
       getClinicianPatients();
     });
     // note: sending start date as end date since we want to stay on the same day.
-    $('#app-appt-submit').one("click", function (e) { handleNewAppt(e, start, start, offset); });
+    end = moment(start);
+    $('#app-appt-submit').off().on("click", function (e) { handleNewAppt(e, start, end, offset); });
   });
 }
 
@@ -289,30 +290,47 @@ function handleNewAppt(e, start, end) {
   var isValid = true;
   handleNewAppt_clearErrors();
   
-  if($("#app-appt-start").val().length < 1) { 
-    showError('#app-appt-start-validation');
+  var apptStartValid = util_checkRegexp($.trim($("#app-appt-start").val()), /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/);
+  if (apptStartValid == false) {
+    showError('#app-appt-start-validation', 'invalid time format');
     isValid = false;
   }
-  if($("#app-appt-end").val().length < 1) { 
-    showError('#app-appt-end-validation');
+  
+  var apptEndValid = util_checkRegexp($.trim($("#app-appt-end").val()), /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/);
+  if (apptEndValid == false) {
+    showError('#app-appt-end-validation', 'invalid time format');
     isValid = false;
   }
+  
   if($("#app-appt-clinician").val().length < 1) { 
     showError('#app-appt-clinician-validation');
     isValid = false;
   }
-  if($("#app-appt-patient").val().length < 1) { 
+  if(!$("#app-appt-patient").val() || $("#app-appt-patient").val().length < 1) { 
     showError('#app-appt-patient-validation');
     isValid = false;
   }
+
+  
+  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
+  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
+  var startDate = new Date(startTimeString);
+  var endDate = new Date(endTimeString);
+  var startTimestamp = startDate.getTime();
+  var endTimestamp = endDate.getTime();
+ 
+  if (endTimestamp < startTimestamp) {
+    isValid = false;
+    showError('#app-appt-end-validation', 'invalid time range');
+  }
+  else if (endTimestamp - startTimestamp < 900000) {
+    isValid = false;
+    showError('#app-appt-end-validation', 'Appointment must be at least 15 minutes long.');
+  }
+  
   if (isValid == false) {
     return;
   }
-  
-  var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
-  var startTime = moment (startTimeString, "mm/dd/yyyy HH:mm A");
-  var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
-  var endTime = moment (endTimeString, "mm/dd/yyyy HH:mm A");
   
   var jsonData = JSON.stringify({ 
     sessionId: user.sessionId,

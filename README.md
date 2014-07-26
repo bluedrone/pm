@@ -1,8 +1,9 @@
 # WDean Medical Practice Manager
-# version 0.8.3  20-JUL-2014
+# version 0.8.4  25-JUL-2014
 
 Improvements:
-Patient scheduling now includes appointment editing and deletion.
+Removed bootstrap-timepicker
+Inproved time input handling and validation.
 
 Bug Fixes:
 

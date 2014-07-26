@@ -251,12 +251,15 @@ function handleUpdateAppt(e, start, end, id) {
   var isValid = true;
   handleNewAppt_clearErrors();
   
-  if($("#app-appt-start").val().length < 1) { 
-    showError('#app-appt-start-validation');
+  var apptStartValid = util_checkRegexp($.trim($("#app-appt-start").val()), /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/);
+  if (apptStartValid == false) {
+    showError('#app-appt-start-validation', 'invalid time format');
     isValid = false;
   }
-  if($("#app-appt-end").val().length < 1) { 
-    showError('#app-appt-end-validation');
+  
+  var apptEndValid = util_checkRegexp($.trim($("#app-appt-end").val()), /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/);
+  if (apptEndValid == false) {
+    showError('#app-appt-end-validation', 'invalid time format');
     isValid = false;
   }
 
@@ -266,6 +269,19 @@ function handleUpdateAppt(e, start, end, id) {
   
   var startTimeString = dateFormat(start, 'mm/dd/yyyy') + " " + $('#app-appt-start').val();
   var endTimeString = dateFormat(end, 'mm/dd/yyyy') + " " + $('#app-appt-end').val();
+  var startDate = new Date(startTimeString);
+  var endDate = new Date(endTimeString);
+  var startTimestamp = startDate.getTime();
+  var endTimestamp = endDate.getTime();
+ 
+  if (endTimestamp < startTimestamp) {
+    isValid = false;
+    showError('#app-appt-end-validation', 'invalid time range');
+  }
+  else if (endTimestamp - startTimestamp < 900000) {
+    isValid = false;
+    showError('#app-appt-end-validation', 'Appointment must be at least 15 minutes long.');
+  }
   
   var jsonData = JSON.stringify({ 
     sessionId: user.sessionId,

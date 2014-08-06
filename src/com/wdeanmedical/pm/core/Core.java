@@ -49,38 +49,52 @@ public class Core {
   public static Map<String, boolean[]> userPermissionsMap = new TreeMap<String, boolean[]>();
   
   public static void buildUserPermissionsMap() {
-    userPermissionsMap.put("/activateClinician",              new boolean[] {true ,true});
-    userPermissionsMap.put("/activateUser",                   new boolean[] {true,true});
-    userPermissionsMap.put("/deactivateClinician",            new boolean[] {true ,true});
-    userPermissionsMap.put("/deactivateUser",                 new boolean[] {true,true});
-    userPermissionsMap.put("/deleteAppt",                     new boolean[] {true ,true});
-    userPermissionsMap.put("/logout",                         new boolean[] {true ,true});
-    userPermissionsMap.put("/patientSearch",                  new boolean[] {true ,true});
-    userPermissionsMap.put("/getClinicians",                  new boolean[] {true,true});
-    userPermissionsMap.put("/getUsers",                       new boolean[] {true,true});
-    userPermissionsMap.put("/getPatientChart",                new boolean[] {true ,true});
-    userPermissionsMap.put("/getRecentPatients",              new boolean[] {true ,true});
-    userPermissionsMap.put("/getPatientToClinicianMessages",  new boolean[] {true ,true});
-    userPermissionsMap.put("getPatientProfileImage",          new boolean[] {true,true});
-    userPermissionsMap.put("/park",                           new boolean[] {true ,true});
-    userPermissionsMap.put("/purgeClinician",                 new boolean[] {true ,true});
-    userPermissionsMap.put("/changeApptTime",                 new boolean[] {true ,true});
-    userPermissionsMap.put("/purgeUser",                      new boolean[] {true ,true});
-    userPermissionsMap.put("/unpark",                         new boolean[] {true ,true});
-    userPermissionsMap.put("/getAppointment",                 new boolean[] {true ,true});
-    userPermissionsMap.put("/getAppointments",                new boolean[] {true ,true});
-    userPermissionsMap.put("/getClinicians",                  new boolean[] {true ,true});
-    userPermissionsMap.put("/getPatients",                    new boolean[] {true ,true});
-    userPermissionsMap.put("/newAppt",                        new boolean[] {true ,true});
-    userPermissionsMap.put("/purgeUser",                      new boolean[] {true,true});
-    userPermissionsMap.put("/saveNewPatient",                 new boolean[] {true ,true});
-    userPermissionsMap.put("/saveNewClinician",               new boolean[] {true ,true});
-    userPermissionsMap.put("/saveNewUser",                    new boolean[] {true ,true});
-    userPermissionsMap.put("/suggestApptSlot",                new boolean[] {true ,true});
-    userPermissionsMap.put("/updateClinician",                new boolean[] {true ,true});
-    userPermissionsMap.put("/updateAppt",                     new boolean[] {true ,true});
-    userPermissionsMap.put("/updateUser",                     new boolean[] {true ,true});
-    userPermissionsMap.put("/uploadProfileImage",             new boolean[] {true ,true});
+  
+    userPermissionsMap.put("/admin/activateClinician",            new boolean[] {true ,true});
+    userPermissionsMap.put("/admin/activateUser",                 new boolean[] {true,true});
+    userPermissionsMap.put("/admin/deactivateClinician",          new boolean[] {true ,true});
+    userPermissionsMap.put("/admin/deactivateUser",               new boolean[] {true,true});
+    userPermissionsMap.put("/admin/getUsers",                     new boolean[] {true,true});
+    userPermissionsMap.put("/admin/purgeClinician",               new boolean[] {true ,true});
+    userPermissionsMap.put("/admin/purgeUser",                    new boolean[] {true ,true});
+    userPermissionsMap.put("/admin/saveNewClinician",             new boolean[] {true ,true});
+    userPermissionsMap.put("/admin/saveNewUser",                  new boolean[] {true ,true});
+    userPermissionsMap.put("/admin/updateClinician",              new boolean[] {true ,true});
+    userPermissionsMap.put("/admin/updateUser",                   new boolean[] {true ,true});
+    
+    userPermissionsMap.put("/app/changeApptTime",                 new boolean[] {true ,true});
+    userPermissionsMap.put("/app/deleteAppt",                     new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getAppointment",                 new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getAppointments",                new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getClinicianMessage",            new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getClinicians",                  new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getMedicalAdvice",               new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPastAppointments",            new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientClinicians",           new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientLetters",              new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientMedicalTests",         new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientToClinicianMessages",  new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientMessages",             new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientProcedures",           new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientProfileImage",         new boolean[] {true,true});
+    userPermissionsMap.put("/app/getPatients",                    new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientSentMessages",         new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientSummary",              new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatients",                    new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientSentMessages",         new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getPatientSummary",              new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getRecentPatients",              new boolean[] {true ,true});
+    userPermissionsMap.put("/app/getUpcomingAppointments",        new boolean[] {true ,true});
+    userPermissionsMap.put("/app/logout",                         new boolean[] {true ,true});
+    userPermissionsMap.put("/app/newAppt",                        new boolean[] {true ,true});
+    userPermissionsMap.put("/app/park",                           new boolean[] {true ,true});
+    userPermissionsMap.put("/app/patientSearch",                  new boolean[] {true ,true});
+    userPermissionsMap.put("/app/saveNewPatient",                 new boolean[] {true ,true});
+    userPermissionsMap.put("/app/suggestApptSlot",                new boolean[] {true ,true});
+    userPermissionsMap.put("/app/unpark",                         new boolean[] {true ,true});
+    userPermissionsMap.put("/app/updateAppt",                     new boolean[] {true ,true});
+    userPermissionsMap.put("/app/uploadProfileImage",             new boolean[] {true ,true});
+    
  }
   
 }

@@ -1,9 +1,8 @@
 # WDean Medical Practice Manager
-# version 0.8.4  25-JUL-2014
+# version 0.8.5  06-AUG-2014
 
 Improvements:
-Removed bootstrap-timepicker
-Inproved time input handling and validation.
+isValidSession() now accounts for the servlet name as well.
 
 Bug Fixes:
 

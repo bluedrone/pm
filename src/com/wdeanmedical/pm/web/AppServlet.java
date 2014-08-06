@@ -112,53 +112,11 @@ public class AppServlet extends HttpServlet  {
           returnString = logout(request, response);  
         }
         else {
-          if (pathInfo.equals("/getPatientSummary")) {
-            returnString = getPatientSummary(request, response);  
-          }
-          else if (pathInfo.equals("/changeApptTime")) {
+          if (pathInfo.equals("/changeApptTime")) {
             returnString = changeApptTime(request, response);  
           }
-          else if (pathInfo.equals("/getPatientMedicalTests")) {
-            returnString = getPatientMedicalTests(request, response);  
-          }
-          else if (pathInfo.equals("/getPatientProcedures")) {
-            returnString = getPatientProcedures(request, response);  
-          }
-          else if (pathInfo.equals("/getPatientLetters")) {
-            returnString = getPatientLetters(request, response);  
-          }
-          else if (pathInfo.equals("/getPatientMessages")) {
-            returnString = getPatientMessages(request, response);  
-          }
-          else if (pathInfo.equals("/getPatientToClinicianMessages")) {
-            returnString = getPatientToClinicianMessages(request, response);  
-          }
-          else if (pathInfo.equals("/getClinicianMessage")) {
-            returnString = getClinicianMessage(request, response);  
-          }
-          else if (pathInfo.equals("/getMedicalAdvice")) {
-            returnString = getMedicalAdvice(request, response);  
-          }
-          else if (pathInfo.equals("/getPatientClinicians")) {
-            returnString = getPatientClinicians(request, response);  
-          }
-          else if (pathInfo.equals("/getPatientSentMessages")) {
-            returnString = getPatientSentMessages(request, response);  
-          }
-          else if (pathInfo.equals("/getPatientProfileImage")) {
-            returnString = getPatientProfileImage(request, response);  
-          }
-          else if (pathInfo.equals("/getPastAppointments")) {
-            returnString = getPastAppointments(request, response);  
-          }
-          else if (pathInfo.equals("/getUpcomingAppointments")) {
-            returnString = getUpcomingAppointments(request, response);  
-          }
-          else if (pathInfo.equals("/getClinicians")) {
-            returnString = getClinicians(request, response);  
-          }
-          else if (pathInfo.equals("/getPatients")) {
-            returnString = getPatients(request, response);  
+          else if (pathInfo.equals("/deleteAppt")) {
+            returnString = deleteAppt(request, response);  
           }
           else if (pathInfo.equals("/getAppointment")) {
             returnString = getAppointment(request, response);  
@@ -166,38 +124,80 @@ public class AppServlet extends HttpServlet  {
           else if (pathInfo.equals("/getAppointments")) {
             returnString = getAppointments(request, response);  
           }
+          else if (pathInfo.equals("/getClinicianMessage")) {
+            returnString = getClinicianMessage(request, response);  
+          }
+          else if (pathInfo.equals("/getClinicians")) {
+            returnString = getClinicians(request, response);  
+          }
+          else if (pathInfo.equals("/getMedicalAdvice")) {
+            returnString = getMedicalAdvice(request, response);  
+          }
+          else if (pathInfo.equals("/getPastAppointments")) {
+            returnString = getPastAppointments(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientClinicians")) {
+            returnString = getPatientClinicians(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientLetters")) {
+            returnString = getPatientLetters(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientMedicalTests")) {
+            returnString = getPatientMedicalTests(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientToClinicianMessages")) {
+            returnString = getPatientToClinicianMessages(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientMessages")) {
+            returnString = getPatientMessages(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientProcedures")) {
+            returnString = getPatientProcedures(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientProfileImage")) {
+            returnString = getPatientProfileImage(request, response);  
+          }
+          else if (pathInfo.equals("/getPatients")) {
+            returnString = getPatients(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientSentMessages")) {
+            returnString = getPatientSentMessages(request, response);  
+          }
+          else if (pathInfo.equals("/getPatientSummary")) {
+            returnString = getPatientSummary(request, response);  
+          }
           else if (pathInfo.equals("/getRecentPatients")) {
             returnString = getRecentPatients(request, response);  
           }
-          else if (pathInfo.equals("/patientSearch")) {
-            returnString = patientSearch(request, response);  
-          }
-          else if (pathInfo.equals("/suggestApptSlot")) {
-            returnString = suggestApptSlot(request, response);  
+          else if (pathInfo.equals("/getUpcomingAppointments")) {
+            returnString = getUpcomingAppointments(request, response);  
           }
           else if (pathInfo.equals("/logout")) {
             returnString = logout(request, response);  
           }
+          else if (pathInfo.equals("/newAppt")) {
+            returnString = newAppt(request, response);  
+          }
           else if (pathInfo.equals("/park")) {
             returnString = park(request, response);  
+          }
+          else if (pathInfo.equals("/patientSearch")) {
+            returnString = patientSearch(request, response);  
+          }
+          else if (pathInfo.equals("/saveNewPatient")) {
+            returnString = saveNewPatient(request, response);  
+          }
+          else if (pathInfo.equals("/suggestApptSlot")) {
+            returnString = suggestApptSlot(request, response);  
           }
           else if (pathInfo.equals("/unpark")) {
             returnString = unpark(request, response);  
           }
-          else if (pathInfo.equals("/newAppt")) {
-            returnString = newAppt(request, response);  
-          }
-          else if (pathInfo.equals("/uploadProfileImage")) {
-            returnString = uploadProfileImage(request, response);  
-          }
           else if (pathInfo.equals("/updateAppt")) {
             returnString = updateAppt(request, response);  
           }
-          else if (pathInfo.equals("/deleteAppt")) {
-            returnString = deleteAppt(request, response);  
-          }
-          else if (pathInfo.equals("/saveNewPatient")) {
-            returnString = saveNewPatient(request, response);  
+          else if (pathInfo.equals("/uploadProfileImage")) {
+            returnString = uploadProfileImage(request, response);  
           }
         }
       }
@@ -232,7 +232,12 @@ public class AppServlet extends HttpServlet  {
       dto = new AuthorizedDTO();
       dto.setSessionId(request.getParameter("sessionId"));
     }
-    return appService.isValidSession(dto, ipAddress, request.getPathInfo());
+    String path = request.getPathInfo();
+    if(path.substring(1).split("/").length > 1) {
+      path = path.substring(1).split("/")[1];
+    } 
+    path = request.getServletPath() + path;
+    return appService.isValidSession(dto, ipAddress, path);
   }
   
   

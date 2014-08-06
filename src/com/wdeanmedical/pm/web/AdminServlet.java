@@ -67,38 +67,38 @@ public class AdminServlet extends AppServlet  {
         returnString = logout(request, response);  
       }
       else { 
-        if (pathInfo.equals("/saveNewClinician")) {
-          returnString = saveNewClinician(request, response);  
-        }
-        else if (pathInfo.equals("/updateClinician")) {
-          returnString = updateClinician(request, response);  
-        }
-        else if (pathInfo.equals("/activateClinician")) {
+        if (pathInfo.equals("/activateClinician")) {
           returnString = activateClinician(request, response);  
-        }
-        else if (pathInfo.equals("/deactivateClinician")) {
-          returnString = deactivateClinician(request, response);  
-        }
-        else if (pathInfo.equals("/purgeClinician")) {
-          returnString = purgeClinician(request, response);  
-        }
-        if (pathInfo.equals("/saveNewUser")) {
-          returnString = saveNewUser(request, response);  
-        }
-        else if (pathInfo.equals("/updateUser")) {
-          returnString = updateUser(request, response);  
         }
         else if (pathInfo.equals("/activateUser")) {
           returnString = activateUser(request, response);  
         }
+        else if (pathInfo.equals("/deactivateClinician")) {
+          returnString = deactivateClinician(request, response);  
+        }
         else if (pathInfo.equals("/deactivateUser")) {
           returnString = deactivateUser(request, response);  
+        }
+        else if (pathInfo.equals("/getUsers")) {
+          returnString = getUsers(request, response);  
+        }
+        else if (pathInfo.equals("/purgeClinician")) {
+          returnString = purgeClinician(request, response);  
         }
         else if (pathInfo.equals("/purgeUser")) {
           returnString = purgeUser(request, response);  
         }
-        else if (pathInfo.equals("/getUsers")) {
-          returnString = getUsers(request, response);  
+        else if (pathInfo.equals("/saveNewClinician")) {
+          returnString = saveNewClinician(request, response);  
+        }
+        else if (pathInfo.equals("/saveNewUser")) {
+          returnString = saveNewUser(request, response);  
+        }
+        else if (pathInfo.equals("/updateClinician")) {
+          returnString = updateClinician(request, response);  
+        }
+        else if (pathInfo.equals("/updateUser")) {
+          returnString = updateUser(request, response);  
         }
       }
      

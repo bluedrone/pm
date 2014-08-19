@@ -1,8 +1,9 @@
 # WDean Medical Practice Manager
-# version 0.8.5  06-AUG-2014
+# version 0.8.6  18-AUG-2014
 
 Improvements:
-isValidSession() now accounts for the servlet name as well.
+Implemented Data Encryption for Patient PHI
+Rewrote data output filtering
 
 Bug Fixes:
 

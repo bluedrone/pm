@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wdeanmedical.pm.dto.MessageDTO;
 import com.wdeanmedical.pm.core.Core;
+import com.wdeanmedical.pm.core.Permissions;
 import com.wdeanmedical.pm.dto.AppointmentDTO;
 import com.wdeanmedical.pm.dto.AuthorizedDTO;
 import com.wdeanmedical.pm.dto.ClinicianDTO;
@@ -54,6 +55,7 @@ import com.wdeanmedical.pm.entity.PatientMedication;
 import com.wdeanmedical.pm.entity.PatientMessage;
 import com.wdeanmedical.pm.entity.User;
 import com.wdeanmedical.pm.service.AppService;
+import com.wdeanmedical.pm.util.DataEncryptor;
 import com.wdeanmedical.pm.util.UserSessionData;
 import com.google.gson.Gson;
 
@@ -71,6 +73,7 @@ public class AppServlet extends HttpServlet  {
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
     ServletContext context = getServletContext();
+    try { DataEncryptor.setEncryptionKey(context.getInitParameter("encryptionKey")); } catch (Exception e1) { e1.printStackTrace();}
     Core.servletContext = context;
     Core.timeZone = context.getInitParameter("timeZone");
     Core.sendMail = new Boolean(context.getInitParameter("mail.send"));
@@ -86,13 +89,8 @@ public class AppServlet extends HttpServlet  {
     Core.patientDirPath = context.getInitParameter("patientDirPath");
     Core.imagesDir = context.getInitParameter("imagesDir");
     Core.filesHome = context.getInitParameter("filesHome");
-    Core.buildUserPermissionsMap();
-    try{
-      appService = new AppService();
-    }
-    catch(MalformedURLException e){
-      e.printStackTrace();
-    }
+    Permissions.buildUserPermissionsMap();
+    try{ appService = new AppService(); } catch(MalformedURLException e){ e.printStackTrace(); }
   }
 
   public void doPost( HttpServletRequest request, HttpServletResponse response) {
@@ -142,17 +140,11 @@ public class AppServlet extends HttpServlet  {
           else if (pathInfo.equals("/getPatientLetters")) {
             returnString = getPatientLetters(request, response);  
           }
-          else if (pathInfo.equals("/getPatientMedicalTests")) {
-            returnString = getPatientMedicalTests(request, response);  
-          }
           else if (pathInfo.equals("/getPatientToClinicianMessages")) {
             returnString = getPatientToClinicianMessages(request, response);  
           }
           else if (pathInfo.equals("/getPatientMessages")) {
             returnString = getPatientMessages(request, response);  
-          }
-          else if (pathInfo.equals("/getPatientProcedures")) {
-            returnString = getPatientProcedures(request, response);  
           }
           else if (pathInfo.equals("/getPatientProfileImage")) {
             returnString = getPatientProfileImage(request, response);  
@@ -272,16 +264,6 @@ public class AppServlet extends HttpServlet  {
     return (json);
   }
 
-  public String getPatientMedicalTests(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<PatientMedicalTest> patientMedicalTests = appService.getPatientMedicalTests(dto); 
-    dto.setPatientMedicalTests(patientMedicalTests);
-    String json = gson.toJson(dto);
-    return json;
-  }
-
 
 
   public String patientSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -304,18 +286,7 @@ public class AppServlet extends HttpServlet  {
     String json = gson.toJson(dto);
     return json;
   }
-  
-  
-  
-  public String getPatientProcedures(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<PatientMedicalProcedure> patientProcedures = appService.getPatientMedicalProcedures(dto); 
-    dto.setPatientMedicalProcedures(patientProcedures);
-    String json = gson.toJson(dto);
-    return json;
-  }
+
 
 
   public String getPatientLetters(HttpServletRequest request, HttpServletResponse response) throws Exception {

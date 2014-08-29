@@ -54,10 +54,17 @@ $(document).ready(function() {
     !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
     if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
     fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    
+    window.onbeforeunload = confirmBeforeUnload;
   }
 });
 /***********      @JQUERY INIT    *******************/
 
+function confirmBeforeUnload() {
+  if (user && user != null) {
+    return "Please log out first in order to save your data."; 
+  }
+}
 
 $('#about').click(function(){ 
   RenderUtil.render('about', {}, function(s) {

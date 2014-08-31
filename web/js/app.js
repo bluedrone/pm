@@ -65,7 +65,7 @@ $(document).ready(function() {
 function app_runIdleTimer() {
   app_idleTime = 0;
   if (app_idleInterval) {clearInterval(app_idleInterval)};
-  app_idleInterval = setInterval(app_timerIncrement, ONE_SECOND);
+  app_idleInterval = setInterval(app_timerIncrement, ONE_MINUTE);
 }
 
 
@@ -80,11 +80,11 @@ function app_timerReset() {
 
 function app_timerIncrement() {
   app_idleTime++;
-  if (app_idleTime == 10) {
+  if (app_idleTime == 25) {
     displayNotification('Your session will soon be automatically parked if still idle', true);
     app_parkWarningDisplayed = true;
   }
-  else if (app_idleTime == 15) {
+  else if (app_idleTime == 30) {
     showParkDialog();
   }
 }

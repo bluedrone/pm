@@ -37,6 +37,11 @@ var clinicianMessages;
 var app_currentPatientId;
 var app_currentMessageId;
 var app_currentCalendarView = 'month';
+var app_idleInterval;
+var app_idleTime = 0;
+var app_parkWarningDisplayed;
+var ONE_SECOND =  1000;
+var ONE_MINUTE = 60000;
 
 /************      @JQUERY INIT    *******************/
 $(document).ready(function() {
@@ -44,21 +49,46 @@ $(document).ready(function() {
     getStaticLists();
     INITIALIZED = true;
     $(function () { $("[data-toggle='popover']").popover({ trigger: "hover" }); });
-
     app_viewStack('signin-screen', DO_SCROLL);
-
-    $('.dropdown-menu').find('form').click(function (e) {
-      e.stopPropagation();
-    });
+    $('.dropdown-menu').find('form').click(function (e) { e.stopPropagation(); });
 
     !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
     if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
     fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
     
+    $(document).mousemove( function(){ app_timerReset(); });
     window.onbeforeunload = confirmBeforeUnload;
   }
 });
 /***********      @JQUERY INIT    *******************/
+
+function app_runIdleTimer() {
+  app_idleTime = 0;
+  if (app_idleInterval) {clearInterval(app_idleInterval)};
+  app_idleInterval = setInterval(app_timerIncrement, ONE_SECOND);
+}
+
+
+function app_timerReset() {
+  if (app_parkWarningDisplayed) { 
+    $('#wdm-notification-text').html('');
+    app_parkWarningDisplayed = false;
+  }
+  app_idleTime = 0;
+}
+
+
+function app_timerIncrement() {
+  app_idleTime++;
+  if (app_idleTime == 10) {
+    displayNotification('Your session will soon be automatically parked if still idle', true);
+    app_parkWarningDisplayed = true;
+  }
+  else if (app_idleTime == 15) {
+    showParkDialog();
+  }
+}
+
 
 function confirmBeforeUnload() {
   if (user && user != null) {
@@ -73,8 +103,10 @@ $('#about').click(function(){
   });
 });
 
-$('#mpark, #mspark').click(function(){ 
-  RenderUtil.render('park', {}, function(s) {
+$('#mpark, #mspark').click(function(){ showParkDialog() });
+
+function showParkDialog() {
+  RenderUtil.render('park', {}, function(s) { 
     $('#modals-placement').html(s);
     $('#app-parked-full-name').html(userFullName);
     $('#modal-park').modal('show'); 
@@ -82,7 +114,7 @@ $('#mpark, #mspark').click(function(){
     $('.app-exit').click(function(){ logout(); });
     $('#app-unpark-submit').click(function(){ unpark(); });
   });
-});
+}
 
 $('#new-message').click(function(){ 
   RenderUtil.render('new_message', {}, function(s) {
@@ -487,6 +519,7 @@ function login(demoMode) {
       userFullName = util_buildFullName(user.firstName, user.middleName, user.lastName);
       notificationText = userFullName + ' logged in.';
       app_viewStack('dashboard-screen', DO_SCROLL); 
+      app_runIdleTimer(); 
     }  
     else  {
       if (user.authStatus == USER_STATUS_NOT_FOUND) {
@@ -514,6 +547,7 @@ function logout() {
     var parsedData = $.parseJSON(data);
     app_viewStack('signin-screen', DO_SCROLL);
     notificationText = userFullName + ' logged out.';
+    if (app_idleInterval) {clearInterval(app_idleInterval)};
     displayNotification(notificationText);
     user = null;
   });
@@ -524,6 +558,7 @@ function park() {
   var jsonData = JSON.stringify({ sessionId: user.sessionId });
   $.post("app/park", {data:jsonData}, function(data) {
     var parsedData = $.parseJSON(data);
+    if (app_idleInterval) {clearInterval(app_idleInterval)};
   });
 }
 
@@ -547,6 +582,7 @@ function unpark() {
         notificationText = userFullName + ' unparked.';
         $('#modal-park').modal('hide'); 
         displayNotification(notificationText);
+        app_runIdleTimer(); 
       }  
       else  {
         if (user.authStatus == USER_STATUS_NOT_FOUND) {

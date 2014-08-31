@@ -1,9 +1,9 @@
 # WDean Medical Practice Manager
-# version 0.8.6  18-AUG-2014
+# version 0.8.7  30-AUG-2014
 
 Improvements:
-Implemented Data Encryption for Patient PHI
-Rewrote data output filtering
+Browser refresh and back button behavior covered so data is not lost.
+Automatic parking after specified timeout enabled.
 
 Bug Fixes:
 

@@ -248,10 +248,6 @@ public class AppServlet extends HttpServlet  {
       List<PatientClinician> patientClinicians = appService.getPatientClinicians(dto); 
       dto.setPatientClinicians(patientClinicians);
     }
-    else if(pathAction.equals("/getPatientMessages")) {
-      List<PatientMessage> patientMessages = appService.getPatientMessages(dto, false); 
-      dto.setPatientMessages(patientMessages);
-    }
     else if(pathAction.equals("/getAppointments")) {
       List<Appointment> appointments = appService.getAppointments(dto, true); 
       dto.setAppointments(appointments);

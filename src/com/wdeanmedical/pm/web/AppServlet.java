@@ -8,23 +8,14 @@
 
 package com.wdeanmedical.pm.web;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -41,27 +32,19 @@ import com.wdeanmedical.pm.dto.AuthorizedDTO;
 import com.wdeanmedical.pm.dto.ClinicianDTO;
 import com.wdeanmedical.pm.dto.LoginDTO;
 import com.wdeanmedical.pm.dto.PatientDTO;
-import com.wdeanmedical.pm.dto.SiteDTO;
 import com.wdeanmedical.pm.dto.UserDTO;
 import com.wdeanmedical.pm.entity.Appointment;
 import com.wdeanmedical.pm.entity.Clinician;
 import com.wdeanmedical.pm.entity.Patient;
 import com.wdeanmedical.pm.entity.PatientClinician;
-import com.wdeanmedical.pm.entity.PatientImmunization;
 import com.wdeanmedical.pm.entity.PatientLetter;
-import com.wdeanmedical.pm.entity.PatientMedicalProcedure;
-import com.wdeanmedical.pm.entity.PatientMedicalTest;
-import com.wdeanmedical.pm.entity.PatientMedication;
 import com.wdeanmedical.pm.entity.PatientMessage;
 import com.wdeanmedical.pm.entity.User;
 import com.wdeanmedical.pm.service.AppService;
 import com.wdeanmedical.pm.util.DataEncryptor;
-import com.wdeanmedical.pm.util.UserSessionData;
 import com.google.gson.Gson;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-
 
 public class AppServlet extends HttpServlet  {
 
@@ -111,13 +94,13 @@ public class AppServlet extends HttpServlet  {
         }
         else {
           if (pathInfo.equals("/changeApptTime")) {
-            returnString = changeApptTime(request, response);  
+            returnString = getAppointmentServiceData(request, "/changeApptTime");  
           }
           else if (pathInfo.equals("/deleteAppt")) {
-            returnString = deleteAppt(request, response);  
+            returnString = getAppointmentServiceData(request, "/deleteAppt");  
           }
           else if (pathInfo.equals("/getAppointment")) {
-            returnString = getAppointment(request, response);  
+            returnString = getAppointmentServiceData(request, "/getAppointment");  
           }
           else if (pathInfo.equals("/getAppointments")) {
             returnString = getAppointments(request, response);  
@@ -129,22 +112,22 @@ public class AppServlet extends HttpServlet  {
             returnString = getClinicians(request, response);  
           }
           else if (pathInfo.equals("/getMedicalAdvice")) {
-            returnString = getMedicalAdvice(request, response);  
+            returnString = getPatientServiceData(request, "/getMedicalAdvice");  
           }
           else if (pathInfo.equals("/getPastAppointments")) {
-            returnString = getPastAppointments(request, response);  
+            returnString = getPatientServiceData(request, "/getPastAppointments");  
           }
           else if (pathInfo.equals("/getPatientClinicians")) {
-            returnString = getPatientClinicians(request, response);  
+            returnString = getPatientServiceData(request, "/getPatientClinicians");  
           }
           else if (pathInfo.equals("/getPatientLetters")) {
-            returnString = getPatientLetters(request, response);  
+            returnString = getPatientServiceData(request, "/getPatientLetters");  
           }
           else if (pathInfo.equals("/getPatientToClinicianMessages")) {
             returnString = getPatientToClinicianMessages(request, response);  
           }
           else if (pathInfo.equals("/getPatientMessages")) {
-            returnString = getPatientMessages(request, response);  
+            returnString = getPatientServiceData(request, "/getPatientMessages");  
           }
           else if (pathInfo.equals("/getPatientProfileImage")) {
             returnString = getPatientProfileImage(request, response);  
@@ -153,48 +136,46 @@ public class AppServlet extends HttpServlet  {
             returnString = getPatients(request, response);  
           }
           else if (pathInfo.equals("/getPatientSentMessages")) {
-            returnString = getPatientSentMessages(request, response);  
+            returnString = getPatientServiceData(request, "/getPatientSentMessages");  
           }
           else if (pathInfo.equals("/getPatientSummary")) {
-            returnString = getPatientSummary(request, response);  
+            returnString = getPatientServiceData(request, "/getPatientSummary");  
           }
           else if (pathInfo.equals("/getRecentPatients")) {
-            returnString = getRecentPatients(request, response);  
+            returnString = getPatientServiceData(request, "/getRecentPatients");  
           }
           else if (pathInfo.equals("/getUpcomingAppointments")) {
-            returnString = getUpcomingAppointments(request, response);  
+            returnString = getPatientServiceData(request, "/getUpcomingAppointments");  
           }
           else if (pathInfo.equals("/logout")) {
             returnString = logout(request, response);  
           }
           else if (pathInfo.equals("/newAppt")) {
-            returnString = newAppt(request, response);  
+            returnString = getAppointmentServiceData(request, "/newAppt");  
           }
           else if (pathInfo.equals("/park")) {
             returnString = park(request, response);  
           }
           else if (pathInfo.equals("/patientSearch")) {
-            returnString = patientSearch(request, response);  
+            returnString = getPatientServiceData(request, "/patientSearch");  
           }
           else if (pathInfo.equals("/saveNewPatient")) {
-            returnString = saveNewPatient(request, response);  
+            returnString = getPatientServiceData(request, "/saveNewPatient");  
           }
           else if (pathInfo.equals("/suggestApptSlot")) {
-            returnString = suggestApptSlot(request, response);  
+            returnString = getAppointmentServiceData(request, "/suggestApptSlot");  
           }
           else if (pathInfo.equals("/unpark")) {
             returnString = unpark(request, response);  
           }
           else if (pathInfo.equals("/updateAppt")) {
-            returnString = updateAppt(request, response);  
+            returnString = getAppointmentServiceData(request, "/updateAppt");  
           }
           else if (pathInfo.equals("/uploadProfileImage")) {
             returnString = uploadProfileImage(request, response);  
           }
         }
       }
-
-
       ServletOutputStream  out = null;
       response.setContentType("text/plain");
       out = response.getOutputStream();
@@ -213,7 +194,6 @@ public class AppServlet extends HttpServlet  {
   public void doGet(HttpServletRequest request, HttpServletResponse response) {
     doPost(request, response);  
   }
-
 
   protected  boolean isValidSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String ipAddress = request.getRemoteHost();
@@ -244,16 +224,81 @@ public class AppServlet extends HttpServlet  {
     String json = gson.toJson(dto);
     return json;
   }
-  
-  
-  public String getPatientSummary(HttpServletRequest request, HttpServletResponse response) throws Exception {
+ 
+  public String getPatientServiceData(HttpServletRequest request, String pathAction) throws Exception {
     String data = request.getParameter("data");
     Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class);  
-    boolean result = appService.getPatientSummary(dto);
+    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
+    if(pathAction.equals("/getPatientSummary")) {
+      boolean result = appService.getPatientSummary(dto);
+    }
+    else if(pathAction.equals("/patientSearch")) {
+      List<Patient> patients = appService.getPatients(dto); 
+      dto.setPatients(patients);
+    }
+    else if(pathAction.equals("/getPatientLetters")) {
+      List<PatientLetter> patientLetters = appService.getPatientLetters(dto); 
+      dto.setPatientLetters(patientLetters);
+    }
+    else if(pathAction.equals("/getPatientMessages")) {
+      List<PatientMessage> patientMessages = appService.getPatientMessages(dto, true); 
+      dto.setPatientMessages(patientMessages);
+    }
+    else if(pathAction.equals("/getPatientClinicians")) {
+      List<PatientClinician> patientClinicians = appService.getPatientClinicians(dto); 
+      dto.setPatientClinicians(patientClinicians);
+    }
+    else if(pathAction.equals("/getPatientMessages")) {
+      List<PatientMessage> patientMessages = appService.getPatientMessages(dto, false); 
+      dto.setPatientMessages(patientMessages);
+    }
+    else if(pathAction.equals("/getAppointments")) {
+      List<Appointment> appointments = appService.getAppointments(dto, true); 
+      dto.setAppointments(appointments);
+    }
+    else if(pathAction.equals("/getRecentPatients")) {
+      List<Patient> patients = appService.getRecentPatients(dto); 
+      dto.setPatients(patients);
+    }
+    else if(pathAction.equals("/getUpcomingAppointments")) {
+      List<Appointment> appointments = appService.getAppointments(dto, false); 
+      dto.setAppointments(appointments);
+    }
+    else if(pathAction.equals("/getMedicalAdvice")) {
+      boolean result = appService.processMessage(dto);
+    }
+    else if(pathAction.equals("/saveNewPatient")) {
+      appService.saveNewPatient(dto, request);
+    }
     String json = gson.toJson(dto);
     return json;
-  }
+  } 
+  
+  public String getAppointmentServiceData(HttpServletRequest request, String pathAction) throws Exception {
+    String data = request.getParameter("data");
+    Gson gson = new Gson();
+    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class); 
+    if(pathAction.equals("/getAppointment")) {
+      boolean result = appService.getAppointment(dto);
+    }
+    else if(pathAction.equals("/changeApptTime")) {
+      boolean result = appService.changeApptTime(dto);
+    }
+    else if(pathAction.equals("/suggestApptSlot")) {
+      appService.suggestApptSlot(dto);
+    }
+    else if(pathAction.equals("/newAppt")) {
+      appService.newAppt(dto);
+    }
+    else if(pathAction.equals("/updateAppt")) {
+      appService.updateAppt(dto);
+    }
+    else if(pathAction.equals("/deleteAppt")) {
+      appService.deleteAppt(dto);
+    }
+    String json = gson.toJson(dto);
+    return json;
+  } 
 
   public String getClinicianMessage(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String data = request.getParameter("data");
@@ -264,52 +309,6 @@ public class AppServlet extends HttpServlet  {
     return (json);
   }
 
-
-
-  public String patientSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<Patient> patients = appService.getPatients(dto); 
-    dto.setPatients(patients);
-    String json = gson.toJson(dto);
-    return json;
-  }
-  
-  
-  
-  public String getAppointment(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class); 
-    boolean result = appService.getAppointment(dto);
-    String json = gson.toJson(dto);
-    return json;
-  }
-
-
-
-  public String getPatientLetters(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<PatientLetter> patientLetters = appService.getPatientLetters(dto); 
-    dto.setPatientLetters(patientLetters);
-    String json = gson.toJson(dto);
-    return json;
-  }
-
-
-  public String getPatientMessages(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<PatientMessage> patientMessages = appService.getPatientMessages(dto, true); 
-    dto.setPatientMessages(patientMessages);
-    String json = gson.toJson(dto);
-    return json;
-  }
-
   public String getPatientToClinicianMessages(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String data = request.getParameter("data");
     Gson gson = new Gson();
@@ -318,76 +317,6 @@ public class AppServlet extends HttpServlet  {
     dto.setPatientMessages(patientMessages);
     String json = gson.toJson(dto);
     return json;
-  }
-
-  public String getPatientClinicians(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<PatientClinician> patientClinicians = appService.getPatientClinicians(dto); 
-    dto.setPatientClinicians(patientClinicians);
-    String json = gson.toJson(dto);
-    return json;
-  }
-
-
-  public String getPatientSentMessages(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<PatientMessage> patientMessages = appService.getPatientMessages(dto, false); 
-    dto.setPatientMessages(patientMessages);
-    String json = gson.toJson(dto);
-    return json;
-  }
-
-
-  public String getPastAppointments(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<Appointment> appointments = appService.getAppointments(dto, true); 
-    dto.setAppointments(appointments);
-    String json = gson.toJson(dto);
-    return json;
-  }
-  
-  public String getRecentPatients(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<Patient> patients = appService.getRecentPatients(dto); 
-    dto.setPatients(patients);
-    String json = gson.toJson(dto);
-    return json;
-  }
-
-  public String getUpcomingAppointments(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    List<Appointment> appointments = appService.getAppointments(dto, false); 
-    dto.setAppointments(appointments);
-    String json = gson.toJson(dto);
-    return json;
-  }
-
-  public String getMedicalAdvice(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class); 
-    boolean result = appService.processMessage(dto); 
-    String json = gson.toJson(dto);
-    return (json);
-  }
-  
-  public String changeApptTime(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class); 
-    boolean result = appService.changeApptTime(dto); 
-    String json = gson.toJson(dto);
-    return (json);
   }
 
   public String getClinicians(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -422,7 +351,6 @@ public class AppServlet extends HttpServlet  {
     return (json);
   }
 
-
   public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String data = request.getParameter("data");
     Gson gson = new Gson();
@@ -432,7 +360,6 @@ public class AppServlet extends HttpServlet  {
     String json = gson.toJson(dto);
     return json;
   }
-
 
   public String checkSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String data = request.getParameter("data");
@@ -445,9 +372,7 @@ public class AppServlet extends HttpServlet  {
     String json = gson.toJson(dto);
     return json;
   }
-  
-  
-  
+ 
   public String getAppointments(HttpServletRequest request, HttpServletResponse response) throws Exception {
     Gson gson = new Gson();
     List<Appointment> bookedAppts = null;
@@ -469,9 +394,7 @@ public class AppServlet extends HttpServlet  {
     }
     return gson.toJson(visitsList);
   }
-  
-  
-  
+ 
   public static String formatDate(Date date){
     String value = null;
     if (date != null){
@@ -480,61 +403,7 @@ public class AppServlet extends HttpServlet  {
     }
     return value;
   }
-  
-  
-  
-  public String suggestApptSlot(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class);  
-    appService.suggestApptSlot(dto);
-    String json = gson.toJson(dto);
-    return json;
-  }
-  
-  
-  public String newAppt(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class);  
-    appService.newAppt(dto);
-    String json = gson.toJson(dto);
-    return json;
-  }
-  
-  
-  
-  public String updateAppt(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class);  
-    appService.updateAppt(dto);
-    String json = gson.toJson(dto);
-    return json;
-  }
-  
-  
-  
-  public String deleteAppt(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    AppointmentDTO dto = gson.fromJson(data, AppointmentDTO.class);  
-    appService.deleteAppt(dto);
-    String json = gson.toJson(dto);
-    return json;
-  }
-  
  
-  public String saveNewPatient(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String data = request.getParameter("data");
-    Gson gson = new Gson();
-    PatientDTO dto = gson.fromJson(data, PatientDTO.class);  
-    appService.saveNewPatient(dto, request);
-    String json = gson.toJson(dto);
-    return json;
-  }
-  
-    
   public String park(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String data = request.getParameter("data");
     Gson gson = new Gson();
@@ -563,5 +432,3 @@ public class AppServlet extends HttpServlet  {
   }
 
 }
-
-

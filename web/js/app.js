@@ -44,22 +44,28 @@ var ONE_SECOND =  1000;
 var ONE_MINUTE = 60000;
 
 /************      @JQUERY INIT    *******************/
-$(document).ready(function() {
-  if (INITIALIZED == false) {
-    getStaticLists();
-    INITIALIZED = true;
-    $(function () { $("[data-toggle='popover']").popover({ trigger: "hover" }); });
-    app_viewStack('signin-screen', DO_SCROLL);
-    $('.dropdown-menu').find('form').click(function (e) { e.stopPropagation(); });
-
-    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-    if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
-    fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-    
-    $(document).mousemove( function(){ app_timerReset(); });
-    window.onbeforeunload = confirmBeforeUnload;
-  }
-});
+(function() {
+	jqueryInit = function()	{
+		if (INITIALIZED == false) {
+		    getStaticLists();
+		    INITIALIZED = true;
+		    $(function () { $("[data-toggle='popover']").popover({ trigger: "hover" }); });
+		    app_viewStack('signin-screen', DO_SCROLL);
+		    $('.dropdown-menu').find('form').click(function (e) { e.stopPropagation(); });
+		
+		    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+		    if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
+		    fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+		    
+		    $(document).mousemove( function(){ app_timerReset(); });
+		    window.onbeforeunload = confirmBeforeUnload;
+		  }
+	}
+	$(document).ready(function() {
+		standalone = modulejs.require("app/standalone")
+	    standalone.ready(jqueryInit)
+	})
+})()
 /***********      @JQUERY INIT    *******************/
 
 function app_runIdleTimer() {
@@ -225,7 +231,7 @@ function viewClinicianMessage() {
   $('#messages-inbox').css({display: "none"});
   var jsonData = JSON.stringify({ id: app_currentMessageId, sessionId: user.sessionId });
   $.post("app/getClinicianMessage", {data:jsonData}, function(data) {
-    var parsedData = $.parseJSON(data);
+	var parsedData = $.parseJSON(data);
     var content = parsedData.content;
     if (parsedData.patient) {
       var patientName = parsedData.patient.fullName;
@@ -386,7 +392,9 @@ function getPatientSummary() {
     $('.patient-summary-mrn').html(parsedData.mrn);
     $('.patient-summary-primary-phone').html(parsedData.primaryPhone);
     $('.patient-summary-secondary-phone').html(parsedData.secondaryPhone);
-    $('.headshot').attr('src', patientHeadshot);
+    if (!$('.headshot').attr('src')) {
+	  	$('.headshot').attr('src', patientHeadshot);
+    }
     viewPatientSummary();
   });
 }

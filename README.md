@@ -1,9 +1,9 @@
 # WDean Medical Practice Manager
-# version 0.8.7  30-AUG-2014
+# version 1.0  01-NOV-2014
 
 Improvements:
-Browser refresh and back button behavior covered so data is not lost.
-Automatic parking after specified timeout enabled.
+Addition of Standalone Mode that will allow for HTML and CSS development without a server.
+Refactoring of Persistance Layer to leverage Hibernate better.
 
 Bug Fixes:
 

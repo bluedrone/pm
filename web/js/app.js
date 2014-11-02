@@ -616,10 +616,17 @@ function showError(item, message) {
   $(item).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}); 
 }
 
-function displayNotification(text) {
+
+function displayNotification(text, sticky) {
   $('#wdm-notification-text').html(text);
-  $('#wdm-notification').fadeIn(400).delay(3000).fadeOut(400); 
+  if (sticky) {
+    $('#wdm-notification').fadeIn(400);
+  }
+  else {
+    $('#wdm-notification').fadeIn(400).delay(3000).fadeOut(400); 
+  }
 }
+
 
 function getStaticLists() {
   $.post("app/getStaticLists", {}, function(data) {

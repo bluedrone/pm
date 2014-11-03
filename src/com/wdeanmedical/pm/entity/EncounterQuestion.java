@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name = "encounter_question")
@@ -14,6 +17,8 @@ public class EncounterQuestion extends BaseEntity implements Serializable {
   private String question = "&nbsp;";
   private String response = "&nbsp;";
   private int encounterId;
+  private Integer patientSuppQuestionsId;
+  private PatientSuppQuestions patientSuppQuestions;
 
   public EncounterQuestion() {
   }
@@ -43,9 +48,27 @@ public class EncounterQuestion extends BaseEntity implements Serializable {
 
   public void setEncounterId(int encounterId) {
     this.encounterId = encounterId;
+  }  
+
+  @Column(name = "patient_supp_questions_id")  
+  public Integer getPatientSuppQuestionsId() {
+	return patientSuppQuestionsId;
   }
 
-  @Override
+  public void setPatientSuppQuestionsId(Integer patientSuppQuestionsId) {
+	this.patientSuppQuestionsId = patientSuppQuestionsId;
+  }
+
+  @JoinColumn(name = "patient_supp_questions_id", referencedColumnName = "id", insertable = false, updatable = false)
+  public PatientSuppQuestions getPatientSuppQuestions() {
+	return patientSuppQuestions;
+  }
+  
+  public void setPatientSuppQuestions(PatientSuppQuestions patientSuppQuestions) {
+	this.patientSuppQuestions = patientSuppQuestions;
+  }
+
+@Override
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();

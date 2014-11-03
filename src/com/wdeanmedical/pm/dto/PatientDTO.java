@@ -3,8 +3,6 @@ package com.wdeanmedical.pm.dto;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Transient;
-
 import com.wdeanmedical.pm.entity.Appointment;
 import com.wdeanmedical.pm.entity.Patient;
 import com.wdeanmedical.pm.entity.PatientClinician;

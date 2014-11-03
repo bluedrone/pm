@@ -6,10 +6,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "patient_medical_history")
@@ -204,7 +205,7 @@ public class PatientMedicalHistory extends BaseEntity implements Serializable {
     this.currentDrugs = currentDrugs;
   }
 
-  @Transient
+  @OneToMany(mappedBy = "patientMedicalHistory")
   public List<EncounterMedication> getEncounterMedicationList() {
     return encounterMedicationList;
   }

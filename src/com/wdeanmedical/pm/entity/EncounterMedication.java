@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +17,10 @@ public class EncounterMedication extends BaseEntity implements Serializable {
   private String dose;
   private String frequency;
   private int patientId;
+  private Integer medicalHistoryId;
+  private MedicalHistory medicalHistory;
+  private Integer patientMedicalHistoryId;
+  private PatientMedicalHistory patientMedicalHistory;
 
   public EncounterMedication() {
   }
@@ -55,8 +60,44 @@ public class EncounterMedication extends BaseEntity implements Serializable {
   public void setPatientId(int patientId) {
     this.patientId = patientId;
   }
+  
+  @Column(name = "medical_history_id")
+  public Integer getMedicalHistoryId() {
+	return medicalHistoryId;
+  }
 
-  @Override
+  public void setMedicalHistoryId(Integer medicalHistoryId) {
+	this.medicalHistoryId = medicalHistoryId;
+  }
+
+  @JoinColumn(name = "medical_history_id", referencedColumnName = "id", insertable = false, updatable = false)
+  public MedicalHistory getMedicalHistory() {
+	return medicalHistory;
+  }
+	
+  public void setMedicalHistory(MedicalHistory medicalHistory) {
+	this.medicalHistory = medicalHistory;
+  }  
+
+  @Column(name = "patient_medical_history_id")
+  public Integer getPatientMedicalHistoryId() {
+	return patientMedicalHistoryId;
+  }
+
+  public void setPatientMedicalHistoryId(Integer patientMedicalHistoryId) {
+	this.patientMedicalHistoryId = patientMedicalHistoryId;
+  }
+
+  @JoinColumn(name = "patient_medical_history_id", referencedColumnName = "id", insertable = false, updatable = false)
+  public PatientMedicalHistory getPatientMedicalHistory() {
+	return patientMedicalHistory;
+  }
+
+  public void setPatientMedicalHistory(PatientMedicalHistory patientMedicalHistory) {
+	this.patientMedicalHistory = patientMedicalHistory;
+  }
+
+@Override
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();

@@ -193,7 +193,7 @@ public class MedicalHistory extends BaseEntity implements Serializable {
     this.currentDrugs = currentDrugs;
   }
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "medicalHistory")
+  @OneToMany(mappedBy = "medicalHistory")
   @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
   public List<EncounterMedication> getEncounterMedicationList() {
     return encounterMedicationList;

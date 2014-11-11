@@ -5,6 +5,10 @@
  * copyright 2013-2014 WDean Medical
  */
 
+// test for Grade A browser support.
+if (!bowser.a) { 
+  document.location = 'browser_upgrade.html';
+}
 
 var DO_SCROLL = true;
 var DONT_SCROLL = false;

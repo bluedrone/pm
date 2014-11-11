@@ -6,6 +6,7 @@
  */
 
 head.js (
+   "js/lib/bowser.min.js",          
    "js/lib/moment.min.js",          
    "js/lib/jquery.min.js", 
    "js/lib/jquery-ui.custom.min.js", 

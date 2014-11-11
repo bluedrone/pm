@@ -28,6 +28,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wdeanmedical.pm.core.ExcludedObjects;
 import com.wdeanmedical.pm.util.DataEncryptor;
 import com.wdeanmedical.pm.service.ActivityLogService;
 import com.wdeanmedical.pm.entity.Credentials;
@@ -104,7 +105,10 @@ public class AppService {
     Integer userId = userSession.getUser().getId();
     activityLogService.logViewPatient(userId, userId, null, "GetRecentPatients");
     List<Patient> patients = appDAO.getRecentPatients(RECENT_PATIENT_SIZE);
-    for (Patient p : patients) { decrypt(p); }
+    for (Patient p : patients) { 
+    	decrypt(p); 
+    	ExcludedObjects.excludeObjects(p);
+    }
     return patients;
   }
   
